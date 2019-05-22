@@ -1,0 +1,2318 @@
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	twoside,			% para impressão em recto e verso. Oposto a oneside
+	a4paper,			% tamanho do papel.
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{abntex2}
+
+% ---
+% Pacotes básicos
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{amsmath}      % matemática
+\usepackage{amssymb}      % também matemática
+\usepackage{amsthm}       % idem
+\usepackage{hyperref}     % para referenciar
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage[normalem]{ulem}
+% ---
+
+\makeatletter
+\def\UL@putbox{\ifx\UL@start\@empty \else % not inner
+  \vrule\@width\z@ \LA@penalty\@M
+  {\UL@skip\wd\UL@box \UL@leaders \kern-\UL@skip}%
+    \phantom{\box\UL@box}%
+  \fi}
+\makeatother
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+% ---
+% CONFIGURAÇÕES DE PACOTES
+% ---
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Criando alguns comandos de centralização no modo de matemática
+% ---
+
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{%
+\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{%
+\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{%
+\clap{$\mathsurround=0pt#1{#2}$}}
+
+% ---
+% Criando comando de definições e teoremas
+% ---
+
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{definicao}{Definição}[chapter]
+\newtheorem{corolario}{Corolário}[chapter]
+\newtheorem{lema}{Lema}[chapter]
+
+% ---
+% Criando símbolos de matemática
+% ---
+
+\newcommand{\espaco}{\hspace{5em}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\solucao}{\Psi(t, \mathring{p})}
+\newcommand{\pbola}{\mathring{p}}
+\newcommand{\pbarra}{\overline{p}}
+\newcommand{\Xchapeu}{\hat{X}}
+\newcommand{\Xchapeuik}{\hat{X}^i_k}
+\newcommand{\Xbola}{\mathring{X}}
+\newcommand{\xbola}{\mathring{x}}
+\newcommand{\Xbolaik}{\mathring{X}^i_k}
+\newcommand{\Xik}{X^i_k}
+\newcommand{\xik}{x^i_k}
+\newcommand{\xbarra}{\overline{x}}
+\newcommand{\xbarraik}{\overline{x}^i_k}
+\newcommand{\xij}{x^i_j}
+\newcommand{\somamj}{\sum^m_{j=1}}
+\newcommand{\somamk}{\sum^m_{k=1}}
+\newcommand{\somani}{\sum^n_{i=1}}
+\newcommand{\precos}{p_1, \ldots, p_m}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\Fi}{\varphi}
+\newcommand{\Pbarra}{\overline{P}}
+\newcommand{\Ubarrao}{\overline{U}_0}
+\newcommand{\B}{\boldsymbol{B}}
+\newcommand{\A}{\boldsymbol{A}}
+\newcommand{\I}{\boldsymbol{I}}
+\newcommand{\Mbarra}{\overline{M}}
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{ESTABILIDADE EM EQUILÍBRIO WALRASIANO: WEINTRAUB E OS MÉTODOS DE LIAPUNOV
+}
+\autor{MARCELO AUGUSTO DONCATTO GELATI}
+\local{Porto Alegre}
+\data{2018}
+\orientador{Jorge Paulo de Araújo}
+\instituicao{%
+  UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL
+  \par
+  FACULDADE DE CIÊNCIAS ECONÔMICAS}
+\tipotrabalho{Trabalho de Conclusão de Curso (Graduação}
+% O preambulo deve conter o tipo do trabalho, o objetivo,
+% o nome da instituição e a área de concentração
+\preambulo{Trabalho de conclusão submetido ao Curso de
+Graduação em Ciências Econômicas da Faculdade de
+Ciências Econômicas da UFRGS, como requisito
+parcial para obtenção do título Bacharel em
+Economia.}
+% ---
+
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title},
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% ---
+
+% ---
+% Espaçamentos entre linhas e parágrafos
+% ---
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% Inserir a ficha bibliografica
+% ---
+
+% Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
+% catalogação-na-publicação''. Você pode utilizar este modelo como referência.
+% Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
+% com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
+% com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
+% o conteúdo de implementação deste arquivo pelo comando abaixo:
+%
+% \begin{fichacatalografica}
+%     \includepdf{fig_ficha_catalografica.pdf}
+% \end{fichacatalografica}
+
+%\begin{fichacatalografica}
+%	\sffamily
+%	\vspace*{\fill}					% Posição vertical
+%	\begin{center}					% Minipage Centralizado
+%	\fbox{\begin{minipage}[c][8cm]{13.5cm}		% Largura
+%\small
+%	\imprimirautor
+%	%Sobrenome, Nome do autor
+%
+%	\hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
+%	\imprimirlocal, \imprimirdata-
+%
+%	%\hspace{0.5cm} \pageref{LastPage} p. : il. (algumas color.) ; 30 cm.\\
+%
+%	\hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
+%	\hspace{0.5cm}
+%	\parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+%
+%	\hspace{0.5cm}
+%		1. Palavra-chave1.
+%		2. Palavra-chave2.
+%		2. Palavra-chave3.
+%		I. Orientador.
+%		III. Faculdade de xxx.
+%		IV. Título
+%	\end{minipage}}
+%% ---
+
+% ---
+% Inserir folha de aprovação
+% ---
+
+% Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
+% 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
+% do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
+% imagem da página assinada pela banca com o comando abaixo:
+%
+% \includepdf{folhadeaprovacao_final.pdf}
+%
+\begin{folhadeaprovacao}
+
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+        \imprimirpreambulo
+    \end{minipage}%
+    \vspace*{\fill}
+   \end{center}
+
+   Trabalho aprovado. \imprimirlocal, \uline{04} de \uline{dezembro} de 2018:
+
+   \assinatura{\textbf{\imprimirorientador} \\ Orientador}
+   \assinatura{\textbf{Marcelo de Carvalho Griebeler} \\ Convidado 1}
+   \assinatura{\textbf{Sérgio Marley Modesto Monteiro} \\ Convidado 2}
+   %\assinatura{\textbf{Professor} \\ Convidado 3}
+   %\assinatura{\textbf{Professor} \\ Convidado 4}
+
+   \begin{center}
+    \vspace*{0.5cm}
+    {\large\imprimirlocal}
+    \par
+    {\large\imprimirdata}
+    \vspace*{1cm}
+  \end{center}
+
+\end{folhadeaprovacao}
+% ---
+
+% ---
+% Dedicatória
+% ---
+\begin{dedicatoria}
+   \vspace*{\fill}
+   \centering
+   \noindent
+   \textit{ Este trabalho é dedicado a todos aqueles que\\
+   me fizeram uma pessoa melhor.} \vspace*{\fill}
+\end{dedicatoria}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+
+Faço meus agradecimentos em ordem cronológica.
+
+Agradeço ao meu pai, por ter me estimulado desde muito cedo.
+Agradeço à minha mãe, por ter me fornecido um vasto capital cultural.
+Apesar dos desentendimentos, boa parte de minha trajetória foi definida por
+vocês e estou muito satisfeito com ela.
+
+Agradeço ao meu amigo Maurício, pelas discussões intelectuais realizadas em todas as vezes
+que saíamos. Todas nossas conversas faziam com que eu tivesse vontade de continuar aprendendo
+e ampliaram minhas áreas de interesse. Sei que sou uma pessoa muito menos limitada
+hoje por causa de suas provocações.
+
+Um de meus agradecimentos principais vai ao meu padrinho acadêmico, Fernando Sabino.
+Enquanto meus pais definiram minha trajetória pré-acadêmica, você me orientou
+para todas ótimas decisões que tomei ao entrar na faculdade. É de coração mesmo
+que agradeço a todas conversas, observações, informações e a tudo mais que você
+disponibilizou para me ajudar. Eu não teria chegado tão longe, não fosse por isso.
+
+Agradeço ao chefe do meu primeiro estágio, Hudson. Todo tempo e informação que você
+concedeu para que eu me qualificasse foram de extrema valia e me engrandeceram
+significativamente.
+
+Outro de meus agradecimentos principais vai a meu amigo Bruno. As linhas que
+tenho que usar para lhe agradecer não conseguiriam conter tudo o que eu precisaria escrever.
+Por isso agradeço a tudo. A tudo mesmo.
+
+Apesar de a qualidade do curso em geral ter sido baixa, tive alguns
+ótimos professores. Dentre estes, gostaria de agradecer principalmente ao professor Horn,
+ao professor Monteiro, ao professor Jorge e ao professor Hélio. Suas aulas e personalidades
+foram inspiradoras. Agradeço também ao professor Griebeler que, apesar de não ter sido
+meu professor, teve paciência de ouvir minhas maluquices e me auxiliou quando
+fui seu bolsista.
+
+Por fim, meu maior agradecimento vai à minha companheira, Daiane.
+Obrigado por ter me tornado mais humano. Obrigado, principalmente,
+por ter me tornado pleno. Seu apoio e carinho diários me fizeram descobrir que,
+independente do que eu faça, o que importa é que eu me sinta feliz. E eu me sinto
+feliz com você. Obrigado.
+
+\end{agradecimentos}
+% ---
+
+% ---
+% Epígrafe
+% ---
+\begin{epigrafe}
+    \vspace*{\fill}
+	\begin{flushright}
+		\textit{"I should like to say two things, one intellectual and one moral. \\
+						The intellectual thing I should want to say is this: \\
+						when you are studying any matter, or considering any philosophy, \\
+						ask yourself only what are the facts and what is the truth that the facts bear out.\\
+						Never let yourself be diverted either by what you wish to believe, \\
+						or by what you think would have beneficent social effects if it were believed. \\
+						But look only, and solely, at what are the facts. \\
+						The moral thing I should wish to say is very simple \\
+						I should say love is wise, hatred is foolish.\\
+						In this world which is getting more and more closely interconnected \\
+						we have to learn to tolerate each other, we have to learn \\
+						to put up with the fact that some people say things that we don't like. \\
+						We can only live together in that way and if we are to live together \\
+						and not die together we must learn a kind of charity and a kind of \\
+						tolerance which is absolutely vital to the continuation of human life on this planet".\\
+						(Bertrand Russell)}
+	\end{flushright}
+\end{epigrafe}
+% ---
+
+% ---
+% RESUMOS
+% ---
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+
+Esta monografia confronta a tese de \citeonline{weintraub1991} acerca do uso dos métodos
+de Liapunov para o estudo da estabilidade do equilíbrio walrasiano.
+Weintraub afirma que foi o artigo de \citeonline{bushawclower1954}
+que introduziu os métodos para a comunidade acadêmica. Este trabalho
+faz uma revisão da literatura sobre estabilidade em equilíbrio geral e mostra que
+os métodos eram conhecidos antes da publicação de Clower e Bushaw.
+
+ \textbf{Palavras-chave}: Equilíbrio geral. Estabilidade. Equações Diferenciais.
+
+ Classificação JEL: B21; C26; D50.
+\end{resumo}
+
+% resumo em inglês
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+
+The present Bachelor thesis deals with Weintraub's (1991) commentary on the use of
+Liapunov's methods for studying stability on a general equilibrium framework.
+Weintraub points out that it was the work of Clower and Bushaw (1954) that
+first introduced Liapunov's methods to the scientific community. This work
+presents a literature review about stability in general equilibrium and then
+shows that the methods were known before Clower and Bushaw's publication.
+
+   \textbf{Keywords}: General Equilibrium. Stability. Differential Equations.
+
+	 JEL classification: B21; C26; D50.
+ \end{otherlanguage*}
+\end{resumo}
+% ---
+
+% ---
+% inserir lista de ilustrações
+% ---
+%\pdfbookmark[0]{\listfigurename}{lof}
+%\listoffigures*
+%\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+%\pdfbookmark[0]{\listtablename}{lot}
+%\listoftables*
+%\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+% \begin{siglas}
+%  \item[EG] Equilíbrio Geral
+%\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+%\begin{simbolos}
+%  \item[$\in$] Pertence
+%\end{simbolos}
+% ---
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+% ----------------------------------------------------------
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+% ----------------------------------------------------------
+
+No livro de \citeonline{weintraub1991} há uma explicação de
+como se deu a transformação da economia pré II Guerra Mundial para uma ciência
+matematizada. Em meio a esta investigação, há uma discussão sobre a introdução
+dos métodos de Liapunov em economia, especificamente nos trabalhos sobre
+estabilidade em um sistema walrasiano. Nesta parte, Weintraub afirma que foi o
+trabalho de \citeonline{bushawclower1954} que introduziu o conceito de
+estabilidade em Liapunov na ciência econômica.
+
+O critério usado para selecionar quem foram os pioneiros não é
+\textit{stricto senso} quem foram os primeiros a utilizar Liapunov em um trabalho de
+economia, pois Weintraub refere-se a um artigo de \citeyear{yasui1950}, escrito em
+japonês por \citeauthoronline{yasui1950} que faz uso das funções de Liapunov. Assim,
+Weintraub conclui que
+
+\begin{citacao}[english]
+	This said, it must be recognized that Yasui did not use Liapunov theory
+	to "solve" a problem previously unsolved. He used the theory to simplify
+	previous results. Further, his connection to the developing literature was
+	remote in terms of distance and influence. His was not the work that
+	introduced Liapunov theory to economists who were linked to the line of
+	papers that resulted in the articles of Arrow, Block, and Hurwicz. \cite[p. 89]{weintraub1991}
+\end{citacao}
+
+Portanto, o que interessa a Weintraub é quem introduziu os métodos diretamente
+para a comunidade científica, que neste caso seriam Clower e Bushaw. No entanto,
+se desenvolveu uma consciência dentro da própria comunidade de que os
+responsáveis por isso foram \citeonline{arrowhurwickz1958}. Segundo
+Weintraub, o motivo principal é que na \textit{survey} clássica sobre
+estabilidade walrasiana de \citeonline{negishi1962} \textbf{não} há quaisquer
+referências ao trabalho de Clower e Bushaw, inclusive quando Negishi refere-se
+explicitamente aos métodos de Liapunov.
+
+Citando Weintraub,
+
+\begin{citacao}[english]
+[...] that judgment [o de Negishi] led to a belief that the Liapunov methods
+were first introduced into the economics literature by Arrow and Hurwicz in
+1958,  when in fact they had been introduced earlier. [...] More
+important, however, is the fact that Clower and Bushaw explicitly used,
+cited, and discussed the second or indirect Liapunov technique for demonstrating
+asymptotic stability of the competitive equilibrium.
+\cite[p. 136-7]{weintraub1991}
+\end{citacao}
+
+Independentemente de considerações sobre a intencionalidade de Negishi ao não
+incluir o artigo daqueles economistas em sua \textit{survey}, meu trabalho
+mostrará que a afirmação de Weintraub está equivocada, pois existe um trabalho
+anterior ao de Clower e Bushaw, a saber \citeonline{arrowhurwicz1951}, que
+utiliza o segundo método de Liapunov.
+
+No entanto, Arrow e Hurwicz utilizam os métodos de Liapunov, mas não o
+discutem explicitamente. Nessas linhas, ainda poderíamos considerar válido o argumento
+de Weintraub. Apesar disso, ainda não cabe atribuir a Clower e Bushaw o
+crédito. Feita a leitura dos artigos de
+\citeonline{arrowhurwickz1958} e \citeonline{bushawclower1954}, constatei que
+enquanto as funções de Liapunov são uma ferramenta central no trabalho de
+Arrow e Hurwicz, Clower e Bushaw referem-se a ela apenas duas vezes: uma como
+demonstração \textbf{alternativa} a um teorema já provado e outra em uma nota
+de rodapé. O julgamento de Weintraub é feito no sentido de que os autores
+foram ignorados mesmo após sua inédita contribuição. Ora, a contribuição não
+pode ser inovadora se nem os autores a consideram dessa maneira. Trata-se
+meramente de um exercício matemático. Diante dessas informações, a tese de Weintraub
+continua sendo difícil de ser sustentada.
+
+Minha investigação analisará esse problema de mais perto e descobrirá
+quais foram as contribuições de fato em cada um dos artigos. A importância dela
+é desmistificar uma ideia que está distante da realidade, já que
+algumas teorias são criadas e perpetuadas sem a devida verificação. Descobri,
+por exemplo, outros autores da história do pensamento econômico que citam a
+tese de Weintraub. Eles dizem que:
+
+\begin{citacao}[english]
+[a]s pointed out by E. R. Weintraub (1991 :136–37),
+the Bushaw-Clower article pioneered the Liapunov technique for demonstrating
+that the addition of stock-adjustment mechanisms could led to asymptotic
+stability of the competitive equilibrium, which was not recognized in the
+literature at the time.
+\cite[p. 47]{backhouseboianovsky2013}
+\end{citacao}
+
+Diante disso, é fundamental mostrar que há problemas na tese de Weintraub.
+
+Para demonstrar meus argumentos, divido a monografia nas seguintes partes.
+Na parte I discuto as origens do estudo moderno sobre estabilidade
+walrasiana, começando com Hicks e passando pelas contribuições de Samuelson e
+de um resultado clássico de Metzler.
+Na parte II exponho os métodos de Liapunov e descrevo detalhadamente o paper de
+Clower e Bushaw, mostrando exatamente onde os autores utilizaram tais
+ferramentas.
+Por fim, na parte III analiso em detalhes o artigo de Arrow e Hurwicz de 1958 e
+faço um breve comentário sobre o artigo de 1951.
+
+% PARTE SOBRE HICKS, SAMUELSON E METZLER
+% ----------------------------------------------------------
+\part{Hicks, Samuelson e Metzler}
+% ----------------------------------------------------------
+% ----------------------------------------------------------
+
+
+% ---
+% Capítulo de Hicks e Samuelson
+% ---
+\chapter{As estabilidades perfeita e dinâmica de Hicks e Samuelson} \label{hickssamuelson}
+% ---
+
+\section{Estabilidade no sentido de Hicks}
+
+É no capítulo 5 de \citeonline{hicks1939} que o autor propõe algumas definições
+de estabilidade em um sistema competitivo. Suponha que há $m$ mercados.
+Estabilidade no mercado $k$, no sentido hicksiano, significa que quando o preço
+do bem $k$ cai a demanda por $k$ será maior que a oferta (e vice-versa).
+No entanto, duas situações podem ocorrer:
+
+\begin{enumerate}
+	\item a estabilidade se verifica após os outros $m - 1$ mercados ajustarem seus
+	preços;
+	\item a estabilidade se verifica após termos fixado o preço de qualquer subconjunto
+	dos outros $m-1$ mercados \footnote{Note que por essa definição podemos fixar o preço de \textit{todos} os outros $m-1$ mercados.}.
+\end{enumerate}
+
+Caso o mercado seja estável no primeiro caso mas não no segundo, dizemos que ele
+é \textit{imperfeitamente estável}. Se o mercado cumpre ambas condições
+\footnote{É evidente que 2 $\implies$ 1. Portanto, é redundante especificar que o mercado
+deve cumprir as duas condições.}, dizemos que é \textit{perfeitamente estável}.
+
+Apesar de Hicks não ter formalizado matematicamente suas definições, faço isso
+em seguida. A motivação vem de \citeonline{metzler1945} e nos ajudará a
+criar a intuição para entender resultados posteriores.
+
+Definindo a função excesso de demanda do bem $k$
+
+\begin{equation}
+	x_k(\precos) = D_k(\precos) - S_k(\precos)
+\end{equation}
+
+em que $D_k$ é a demanda pelo bem $k$ e $S_k$ é a oferta pelo bem $k$.
+
+A estabilidade no mercado $k$ é definida pela condição de equilíbrio parcial
+
+\begin{equation} \label{estab}
+	\frac{dx_k}{dp_k} < 0.
+\end{equation}
+
+Para que o mercado seja imperfeitamente estável, \ref{estab} deve se verificar
+após todos os outros mercados terem se ajustado, isto é,
+
+\begin{equation}
+	\frac{d}{dp_k}[x_j(p_1(p_k), \ldots, p_m(p_k))] = 0 \espaco para \; j \neq k.
+\end{equation}
+
+Montando o sistema para os $m$ mercados e fazendo a regra da cadeia, temos
+
+\begin{equation} \label{sistimperf}
+	\begin{aligned}
+		& \frac{dx_1}{dp_k} = \frac{dx_1}{dp_1}\frac{dp_1}{dp_k} + \ldots + \frac{dx_1}{dp_k} + \ldots + \frac{dx_1}{dp_m}\frac{dp_m}{dp_k} = 0 \\
+		& \vdots \\
+		& \frac{dx_k}{dp_k} = \frac{dx_k}{dp_1}\frac{dp_1}{dp_k} + \ldots + \frac{dx_k}{dp_k} + \ldots + \frac{dx_k}{dp_m}\frac{dp_m}{dp_k}     \\
+    & \vdots \\
+	  & \frac{dx_m}{dp_k} = \frac{dx_m}{dp_1}\frac{dp_1}{dp_k} + \ldots + \frac{dx_m}{dp_k} + \ldots + \frac{dx_m}{dp_m}\frac{dp_m}{dp_k} = 0.
+	\end{aligned}
+\end{equation}
+
+Matricialmente:
+
+\begin{equation} \label{matrizimperf}
+	\begin{pmatrix}
+		\frac{dx_1}{dp_1} & \ldots & \frac{dx_1}{dp_m} \\
+		\vdots \\
+		\frac{dx_k}{dp_1} & \ldots & \frac{dx_k}{dp_m} \\
+		\vdots \\
+		\frac{dx_m}{dp_1} & \ldots & \frac{dx_m}{dp_m}
+	\end{pmatrix} \:
+	\begin{pmatrix}
+		\frac{dp_1}{dp_k} \\
+		\vdots \\
+		1 \\
+		\vdots \\
+		\frac{dp_m}{dp_k}
+	\end{pmatrix} \; = \;
+	\begin{pmatrix}
+		0 \\
+		\vdots \\
+		\frac{dx_k}{dp_k} \\
+		\vdots \\
+		0
+	\end{pmatrix}
+	.
+\end{equation}
+
+Por Cramer, obtemos
+
+\begin{equation} \label{cramerimperf}
+	1 =
+	\frac{\begin{vmatrix}
+		\frac{dx_1}{dp_1} & \ldots & 0 & \ldots & \frac{dx_1}{dp_m} \\
+		\vdots \\
+		\frac{dx_k}{dp_1} & \ldots & \frac{dx_k}{dp_k} & \ldots & \frac{dx_k}{dp_m} \\
+		\vdots \\
+		\frac{dx_m}{dp_1} & \ldots & 0 & \ldots & \frac{dx_m}{dp_m} \\
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		\frac{dx_1}{dp_1} & \ldots & \frac{dx_1}{dp_k} & \ldots & \frac{dx_1}{dp_m} \\
+		\vdots \\
+		\frac{dx_k}{dp_1} & \ldots & \frac{dx_k}{dp_k} & \ldots & \frac{dx_k}{dp_m} \\
+		\vdots \\
+		\frac{dx_m}{dp_1} & \ldots & \frac{dx_m}{dp_k} & \ldots & \frac{dx_m}{dp_m} \\
+	\end{vmatrix}} \; = \;
+   \frac{
+	\begin{vmatrix}
+		A(k)
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		A
+	\end{vmatrix}}.
+\end{equation}
+
+Se utilizarmos a expansão de Laplace em $A(k)$ na coluna $k$, obteremos a matriz
+$A(k)$ sem a linha e sem a coluna $k$ - que chamarei de $A(k|k)$ - multiplicada por $\frac{dx_k}{dp_k}$.
+Assim, obtemos
+
+\begin{equation} \label{laplaceimperf}
+	1 =
+	\frac{dx_k}{dp_k}
+	\frac{\begin{vmatrix}
+		A(k|k)
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		A
+	\end{vmatrix}}
+	\implies
+	\frac{dx_k}{dp_k} =
+	\frac{\begin{vmatrix}
+		A
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		A(k|k)
+	\end{vmatrix}}.
+\end{equation}
+
+Então, para que a condição \ref{estab} seja cumprida, o primeiro menor $k$
+(isto é, $det[A(k|k)]$) tem que possuir sinal oposto a $det[A]$.
+
+A formulação para a estabilidade perfeita é semelhante. Vamos supor que após uma alteração
+no preço do bem $k$, sem perda de generalidade, deixamos o preço dos bens
+$k + 1, \ldots, m$ fixos. Então, o sistema \ref{sistimperf} fica da seguinte maneira
+
+\begin{equation} \label{sistperf}
+	\begin{aligned}
+		& \frac{dx_1}{dp_k} = \frac{dx_1}{dp_1}\frac{dp_1}{dp_k} + \ldots + \frac{dx_1}{dp_k}  = 0 \\
+		& \vdots \\
+		& \frac{dx_k}{dp_k} = \frac{dx_k}{dp_1}\frac{dp_1}{dp_k} + \ldots + \frac{dx_k}{dp_k}.
+	\end{aligned}
+\end{equation}
+
+Matricialmente,
+
+\begin{equation} \label{matrizperf}
+	\begin{pmatrix}
+		\frac{dx_1}{dp_1} & \ldots & \frac{dx_1}{dp_k} \\
+		\vdots \\
+		\frac{dx_k}{dp_1} & \ldots & \frac{dx_k}{dp_k} \\
+	\end{pmatrix} \:
+	\begin{pmatrix}
+		\frac{dp_1}{dp_k} \\
+		\vdots \\
+		1 \\
+	\end{pmatrix} \; = \;
+	\begin{pmatrix}
+		0 \\
+		\vdots \\
+		\frac{dx_k}{dp_k}
+	\end{pmatrix}
+	.
+\end{equation}
+
+Por Cramer,
+
+\begin{equation} \label{cramerperf}
+	1 =
+	\frac{\begin{vmatrix}
+		\frac{dx_1}{dp_1} & \ldots & 0  \\
+		\vdots \\
+		\frac{dx_k}{dp_1} & \ldots & \frac{dx_k}{dp_k}
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		\frac{dx_1}{dp_1} & \ldots & \frac{dx_1}{dp_k} \\
+		\vdots \\
+		\frac{dx_k}{dp_1} & \ldots & \frac{dx_k}{dp_k}
+	\end{vmatrix}} \; = \;
+   \frac{
+	\begin{vmatrix}
+		A^k(k)
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		A^k
+	\end{vmatrix}}.
+\end{equation}
+
+Usando Laplace em $A^k(k)$ na coluna $k$, obteremos a mesma matriz sem a linha e
+sem a coluna $k$, multiplicada por $\frac{dx_k}{dp_k}$. Isto é,
+
+\begin{equation} \label{laplaceperf}
+	1 =
+	\frac{dx_k}{dp_k}
+	\frac{\begin{vmatrix}
+		A^k(k|k)
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		A^k
+	\end{vmatrix}}
+	\implies
+	\frac{dx_k}{dp_k} =
+	\frac{\begin{vmatrix}
+		A^k
+	\end{vmatrix}}
+	{\begin{vmatrix}
+		A^k(k|k)
+	\end{vmatrix}}.
+\end{equation}
+
+Note que $A^k$ é o menor em que as linhas e colunas $k+1, \ldots, m$ foram retiradas.
+$A^k(k|k)$ é o menor em que as linhas e colunas $k, \ldots, m$ foram retiradas.
+Para que haja estabilidade, eles devem ter sinais opostos.
+Portanto, estabilidade perfeita implica que os menores devem \textit{alternar}
+os sinais \footnote{Isto é, os menores de ordem
+ímpar devem ter sinal negativo e os de ordem par devem ter sinal positivo.}
+
+\begin{equation} \label{hicksaltern}
+	\frac{dx_k}{dp_k} < 0, \;
+	\begin{vmatrix}
+	 		\frac{dx_k}{dp_k} & \frac{dx_k}{dp_l} \\
+			\frac{dx_l}{dp_k} & \frac{dx_l}{dp_l}
+	 \end{vmatrix} > 0, \;
+	 \begin{vmatrix}
+			 \frac{dx_k}{dp_k} & \frac{dx_k}{dp_l} & \frac{dx_k}{dp_j} \\
+			 \frac{dx_l}{dp_k} & \frac{dx_l}{dp_l} & \frac{dx_l}{dp_j} \\
+			 \frac{dx_j}{dp_k} & \frac{dx_j}{dp_l} & \frac{dx_j}{dp_j}
+	 \end{vmatrix} < 0, \; etc.,
+\end{equation}
+
+de tal forma que
+
+\begin{equation} \label{hicksperf}
+	sinal
+\begin{vmatrix}
+	A
+\end{vmatrix} =
+ sinal[(-1)^m].
+\end{equation}
+
+\section{As contribuições de Samuelson}
+
+Infelizmente, a estabilidade no sentido de Hicks não é derivada de considerações
+dinâmicas. O trabalho de Hicks é essencialmente estático. Para tentar entender
+as relações entre estática comparativa e sistemas dinâmicos, \citeonline{samuelson1942}
+cunha o termo \textit{princípio da correspondência}. Esse termo aos procedimentos
+feitos por ele em um artigo anterior \cite{samuelson1941}.
+
+Dentre as contribuições do artigo de \citeyear{samuelson1941}, destaco suas
+definições de estabilidade. São elas:
+
+\begin{enumerate}
+	\item estabilidade do primeiro tipo "no grande" (ou global);
+	\item estabilidade do primeiro tipo "no pequeno" (ou local);
+	\item estabilidade do segundo tipo "no grande";
+	\item estabilidade do segundo tipo "no pequeno".
+\end{enumerate}
+
+A estabilidade do primeiro significa que existe pelo menos um ponto de equilíbrio $\xbola$ tal que
+algumas trajetórias convergem para esse ponto. A estabilidade \textbf{global}
+especifica que independente do ponto inicial $\xbarra$, a trajetória atinge o ponto de equilíbrio $\xbola$.
+Matematicamente, temos que
+
+\begin{equation}
+	\lim_{t \to \infty} x(t; \xbarra) = \xbola.
+\end{equation}
+
+Para que um ponto $\xbola$ seja \textbf{localmente} estável, deve existir uma vizinhança
+$N(\xbola)$ de $\xbola$ tal que toda trajetória que inicie em algum ponto na vizinhança de $N(\xbola)$
+converge para $\xbola$. Matematicamente, temos que
+
+\begin{equation}
+	\lim_{t \to \infty} x(t; \xbarra) = \xbola, \espaco \xbarra \in N(\xbola).
+\end{equation}
+
+Apesar de a estabilidade do segundo tipo não nos interessar, vale a pena
+descrevê-la. Refere-se a um ponto de equilíbrio tal que a trajetória orbita em torno desse ponto,
+nunca efetivamente convergindo para ele. As considerações sobre estabilidade local
+e global se aplicam aqui da mesma maneira.
+
+Neste trabalho uso o termo estabilidade dinâmica para me referir à estabilidade do
+primeiro tipo.
+
+Durante o início de 1940, algumas tentativas foram feitas para entender a relação
+entre a estabilidade hicksiana e a estabilidade dinâmica. Por exemplo,
+\citeonline{samuelson1941} mostra que a estabilidade imperfeita de Hicks não
+era uma condição nem necessária nem suficiente para a estabilidade dinâmica.
+Mostra também que a estabilidade perfeita não é uma condição necessária para
+a estabilidade dinâmica. É somente em \citeyear{samuelson1944} que ele, com a
+ajuda do matemático  Witold Hurewicz, mostra que a estabilidade perfeita
+\textit{também} não é uma condição suficiente para a estabilidade dinâmica. O artigo dá um
+exemplo em que há estabilidade hicksiana perfeita mas não há estabilidade dinâmica.
+No próximo capítulo, mostro alguns exemplos em que essas situações acontecem.
+
+Assim, os economistas descobriram que a estabilidade em Hicks não é uma condição
+nem necessária e nem suficiente para a estabilidade dinâmica. No entanto, há
+alguns casos em que é possível mostrar que as duas têm semelhanças. Portanto,
+meu objetivo capítulo seguinte é explorar mais a fundo a relação entre estabilidade
+dinâmica e hicksiana.
+
+% ---
+% Capítulo de Metzler
+% ---
+\chapter{Metzler e a integração das duas estabilidades} \label{metzler}
+% ---
+
+\section{Velocidades de ajustamento}
+
+Conforme \citeonline{metzler1945}, é \citeonline{lange1944} que aponta pela primeira
+vez que as formulações de Hicks, que vimos no capítulo \ref{hicks},
+são instantâneas e não variam de mercado para mercado.
+Ainda nesse livro, Lange monta um sistema com velocidades de
+ajustamento.
+
+Assim, temos o novo sistema dinâmico
+
+\begin{equation}
+	\frac{dp_i}{dt} = k_i x_i, \; k_i > 0 \espaco i = 1, \ldots, m
+\end{equation}
+
+em que a variação dos preços é proporcional
+ao excesso de demanda pelo bem $x_i$, ponderado pelas velocidades de ajustamento $k_i$.
+
+Há aqui uma leve mudança de notação. A partir de agora, utilizo o subíndice
+$i$ para cada bem ao invés do antigo $k$. A letra $k$ agora representa a velocidade de ajustamento.
+
+O exemplo a seguir vai trazer luz à relação entre as estabilidades hicksiana e dinâmica.
+
+Imagine o seguinte sistema
+
+\begin{equation}
+	\begin{matrix}
+		\frac{dp_1}{dt} = - k_1(p_1 - \pbola_1) - k_1(p_2 - \pbola_2) \\
+		\frac{dp_2}{dt} = 2 k_2(p_1 - \pbola_1) + k_2(p_2 - \pbola_2).
+	\end{matrix}
+\end{equation}
+
+Aqui, as funções $x_1(p_1, p_2)$ e $x_2(p_1, p_2)$ foram aproximadas pelos seu planos tangentes,
+ou seja,
+
+\begin{equation} \label{sist2}
+	\begin{matrix}
+		x_1(p_1, p_2) = x_1(\pbola_1, \pbola_2) + \frac{dx_1}{dp_1}(p_1 - \pbola_1) + \frac{dx_1}{dp_2}(p_2 - \pbola_2) \\
+		x_2(p_1, p_2) = x_2(\pbola_1, \pbola_2) + \frac{dx_2}{dp_1}(p_1 - \pbola_1) + \frac{dx_2}{dp_2}(p_2 - \pbola_2).
+	\end{matrix}
+\end{equation}
+
+Como $\pbola_1$ e $\pbola_2$ são pontos de equilíbrio, então $x_1(\pbola_1, \pbola_2)
+= x_2(\pbola_1, \pbola_2) = 0$ e
+
+\begin{equation}
+	\begin{matrix}
+		\frac{dx_1}{dp_1} = -1 & \frac{dx_1}{dp_2} = -1 \\
+		\frac{dx_2}{dp_1} = 2 & \frac{dx_2}{dp_2} = 1.
+	\end{matrix}
+\end{equation}
+
+Na forma matricial, temos
+
+\begin{equation}
+	k^TA =
+	\begin{pmatrix}
+		k_1 & k_2
+	\end{pmatrix}
+	\begin{pmatrix}
+		-1 & -1 \\
+		2 & 1
+	\end{pmatrix} =
+	\begin{pmatrix}
+		-k_1 & -k_1 \\
+		2k_2 & k_2
+	\end{pmatrix}
+\end{equation}
+
+em que $k^T$ é o transposto do vetor coluna $k = (k_1, k_2)$.
+
+Do ponto de vista hicksiano esse sistema não é imperfeitamente estável, pois
+os dois menores principais de têm sinais diferentes (veja \ref{hicksaltern}).
+
+O polinômio característico de $k^T A$ é
+
+\begin{equation} \label{teste}
+	p(\lambda) = \lambda^2 - (k_2 - k_1)\lambda + k_1k_2.
+\end{equation}
+
+Chamando as raízes de \ref{teste} de $\lambda_1$ e $\lambda_2$, temos que $\lambda_1 \lambda_2 = k_1 k_2 > 0$,
+pois $k_1, k_2 > 0$. Portanto, as raízes devem ter o mesmo sinal. Além disso, temos que
+$\lambda_1 + \lambda_2 = k_2 - k_1$. Portanto, se $k_1 > k_2 \implies \lambda_1 + \lambda_2 < 0
+\implies$ os dois autovalores são negativos e o sistema é dinamicamente estável.
+Se $k_1 < k_2$ o sistema não é estável.
+
+Este exemplo mostra que mesmo que as condições de Hicks não estejam satisfeitas é
+possível que o sistema seja dinamicamente estável e que a estabilidade depende também
+das velocidades de ajustamento e não só dos $\frac{dx_i}{dp_j}$.
+
+Assim, podemos interpretar a estabilidade de Hicks de outra maneira. Podemos imaginar
+que ela é uma formulação que \textit{independe} das velocidades de ajustes.
+Neste contexto, Metzler mostra que se um sistema é dinamicamente estável
+para quaisquer $k_1 > 0, \ldots, k_m > 0$, então o sistema também é (perfeitamente) estável no sentido
+de Hicks. Este é o resultado que mostrarei a seguir.
+
+\section{Primeiro teorema de Metzler}
+
+Vamos montar o sistema \ref{sist2} para
+os $m$ mercados com as velocidades de ajustamento.
+
+\begin{equation} \label{sistm}
+		\frac{dp_i}{dt} = k_ia_{i1}(p_1 - \pbola_1) + \ldots + k_ia_{im}(p_m - \pbola_m) \espaco i = 1, \ldots, m
+\end{equation}
+
+em que $a_{ij} = \frac{dx_i}{dp_j}$.
+
+O polinômio característico de \ref{sistm} é
+
+\begin{equation} \label{poli}
+	p(\lambda) =
+	\begin{vmatrix}
+		\lambda - k_1a_{11} & -k_1a_{12} & \ldots & -k_1a_{1m} \\
+		-k_2a_{21} & \lambda - k_2a_{22} & \ldots & -k_2a_{2m} \\
+		\vdots & \vdots & & \vdots \\
+		-k_ma_{m1} & -k_m a_{m2} & \ldots & \lambda - k_ma_{mm}
+	\end{vmatrix} =
+	\begin{vmatrix}
+		\lambda I - k^T A
+	\end{vmatrix}
+\end{equation}
+
+Expandindo \ref{poli}, temos
+
+\begin{equation} \label{policarac}
+	p(\lambda) = \lambda^m + (-1)^1 S_1 \lambda^{m-1} + (-1)^2 S_2 \lambda^{m-2} + \ldots +
+	(-1)^{m-1} S_{m-1} \lambda + (-1)^m S_m
+\end{equation}
+
+em que $S_i$, $i = 1, \ldots, m$, é o somatório de todos os menores principais
+de ordem $i$ da matriz $k^T A$ .
+
+Para que ele seja estável, as raízes $\lambda_m$ devem ter parte real negativa.
+Agora note duas condições abaixo:
+
+\begin{subequations}
+\begin{equation} \label{condic1}
+	p(0) = (-1)^m S_m = (-1)^m
+	\begin{vmatrix}
+		k^T A
+	\end{vmatrix}.
+\end{equation}
+
+\begin{equation} \label{condic2}
+	\lim_{\lambda \to \infty} p(\lambda) = \infty.
+\end{equation}
+\end{subequations}
+
+Se  $(-1)^m$ e $|k^T A|$ tiverem sinais opostos, $p(0) < 0$ por \ref{condic1}.
+Mas como \ref{condic2} nos garante que $p(\lambda) \to \infty$, o eixo $\lambda$
+será cortado. Portanto, o comportamento de \ref{policarac} será (grosseiramente)
+assim:
+
+\newpage
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+\draw[->] (0, 0) -- (1,0) node[right] {$\lambda$};
+\draw[->] (0,-1) -- (0,1) node[above] {$p(\lambda)$};
+\draw[blue] (0, -0.2) -- (1, 0.8);
+\end{tikzpicture}
+\captionof{figure}{Instabilidade do sistema \ref{sistm}}
+\end{center}
+
+Nesse caso, o sistema é instável, pois $p(\lambda) = 0$ para algum $\lambda$ com parte
+real positiva.
+
+Se $(-1)^m$ e $|k^T A|$ têm o mesmo sinal, o comportamento será desse tipo:
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+\draw[->] (0, 0) -- (1,0) node[right] {$\lambda$};
+\draw[->] (0,-1) -- (0,1) node[above] {$p(\lambda)$};
+\draw[blue] (0, 0.1) -- (1, 1);
+\end{tikzpicture}
+\captionof{figure}{Estabilidade do sistema \ref{sistm}}
+\end{center}
+
+E não há raízes com parte real positiva. Portanto, o sistema é estável.
+Mas essa é exatamente a última condição de estabilidade perfeita de Hicks (ver \ref{hicksperf})!
+Agora, basta verificar as condições \ref{hicksaltern} e garantiremos que um sistema dinamicamente estável
+atende as condições de Hicks.
+
+Imagine que alguns mercados são muito inflexíveis em relação a outros, isto é,
+suas velocidades de ajustamento são muito pequenas. Supondo que esses $m-n$ mercados não se ajustem, colocamos
+suas velocidades de ajustamento $k_{n+1} = \ldots = k_m = 0$. Os outros $n$ mercados formam o sistema
+
+\begin{equation} \label{sistn}
+		\frac{dp_i}{dt} = k_ia_{i1}(p_1 - \pbola_1) + \ldots + k_ia_{in}(p_n - \pbola_n) \espaco i = 1, \ldots, n.
+\end{equation}
+
+Ora, repetindo os procedimentos realizados acima, descobirmos que o determinante desse
+sistema deve ter o mesmo sinal de $(-1)^n$. Portanto, as condições de Hicks são satisfeitas
+e ele é perfeitamente estável e temos o seguinte teorema:
+
+\begin{teorema} \label{metzler1}
+	Se um sistema é dinamicamente estável para quaisquer velocidades de ajustamento,
+	então ele também é perfeitamente estável.
+\end{teorema}
+
+\section{Segundo teorema de Metzler}
+
+Apesar de ser uma condição necessária, ela não é uma condição suficiente. O exemplo
+a seguir ilustra isso.
+
+Considere o sistema
+
+\begin{equation}
+	\begin{matrix}
+		\frac{dp_1}{dt} =& -k_1(p_1 - \pbola_1) &- 0.8k_1(p_2 - \pbola_2) & \\
+		\frac{dp_2}{dt} =&                      &- k_2(p_2 - \pbola_2)    &- 0.8k_2(p_3 - \pbola_3) \\
+		\frac{dp_3}{dt} =& -10k_3(p1 - \pbola_1)&- k_3(p_2 - \pbola_2)   &- k_3(p_3 - \pbola_3)
+	\end{matrix}
+\end{equation}
+
+e sua matriz
+
+\begin{equation}
+	\begin{pmatrix}
+		-k_1   & -0.8k_1 & 0 \\
+		0      & -k_2    & -0.8k_2 \\
+		-10k_3 & -k_3    & -k_3
+	\end{pmatrix}
+	.
+\end{equation}
+
+Os menores principais de primeira ordem são todos negativos ($-k_1, -k_2, -k_3$), os de segunda
+ordem são positivos ($0.2k_2k_3, k_1k_3, k_1k_2$) e o determinante da matriz é
+negativo ($-6.6k_1k_2k_3$). Portanto, a matriz é perfeitamente estável.
+
+Colocando $k_1 = 2, k_2 = 2, k_3 = 1$, temos o polinômio característico
+
+\begin{equation}
+	\lambda^3 + 5\lambda^2 + 6.4\lambda + 26.4
+\end{equation}
+
+com raízes $\lambda_{1, 2} \approx -0.095 \pm 2.34i$ e $\lambda_3 \approx -4.81$.
+Como as partes reais são todas negativas, o sistema é dinamicamente estável.
+
+Se fizermos $k_1 = 1, k_2 = 2, k_3 = 2$, entretanto, o sistema não será assintoticamente estável.
+O polinômio característico é
+
+\begin{equation}
+	\lambda^3 + 5\lambda^2 + 4.8\lambda + 26.4
+\end{equation}
+
+e as raízes são $\lambda_{1, 2} \approx 0.039 \pm 2.28i$ e $\lambda_3 \approx - 5.08$.
+Como as raízes complexas têm parte real positiva, o sistema não é estável.
+
+Visto ess resultado, precisamos de uma condição mais forte para integrar as duas noções de
+estabilidade. É aqui que Metzler dá início ao seu resultado principal.
+
+Metzler supõe a condição de substituibilidade bruta entre todos os bens, isto é,
+
+\begin{equation}
+	\frac{dx_i}{dp_j} > 0 \espaco i \neq j
+\end{equation}
+
+Lançando mão dessa condição, Metzler mostra que a estabilidade perfeita no sentido
+de Hicks é equivalente à estabilidade dinâmica.
+
+Para demonstrar essa afirmação, Metzler introduz um sistema de equações em diferenças
+que serve como auxiliar na demonstração
+
+\begin{equation} \label{sistdif}
+	\begin{matrix}
+		y_1(t) =& (k_1a_{11} + 1)y_1(t - 1) &+& k_1a_{12}y_2(t-1) &+& \ldots &+& k_1a_{1m}y_m(t-1) \\
+		y_2(t) =& k_2a_{21}y_1(t - 1) &+& (k_2a_{22} + 1)y_2(t-1) &+& \ldots &+& k_2a_{2m}y_m(t-1) \\
+		\vdots \\
+		y_m(t) =& k_ma_{m1}y_1(t - 1) &+& k_ma_{m2}y_2(t-1) &+& \ldots &+& (k_ma_{mm} + 1)y_m(t-1)
+	\end{matrix}
+\end{equation}
+
+e sua matriz
+
+\begin{equation} \label{matrizdif}
+	B =
+	\begin{pmatrix}
+		k_1a_{11} + 1 & k_1a_{12} & \ldots & k_1a_{1m} \\
+		k_2a_{21} & k_2a_{22} + 1 & \ldots & k_2a_{2m} \\
+		\vdots \\
+		k_ma_{m1} & k_ma_{m2} & \ldots & k_ma_{mm} + 1
+	\end{pmatrix}.
+\end{equation}
+
+A primeira etapa da argumentação é mostrar que o sistema de equações em diferenças \ref{sistdif} é estável
+se, e só se, o sistema \ref{sistm} é estável. Minha demonstração se desviará
+levemente da demonstração de Metzler, por acreditar que é defeituosa
+em um determinado procedimento \footnote{Agradeço ao orientador Jorge P. de Araújo por apontar
+isso e pela sugestão de demonstração alternativa.}.
+
+Montando o polinômio característico de \ref{sistdif}
+
+\begin{equation} \label{polidif}
+	q(\rho) =
+	\begin{vmatrix}
+		\rho - (k_1a_{11} + 1) & - k_1a_{12} & \ldots & - k_1a_{1m} \\
+		- k_2a_{21} & \rho - (k_2a_{22} + 1) & \ldots & - k_2a_{2m} \\
+		\vdots \\
+		- k_ma_{m1} & - k_ma_{m2} & \ldots & \rho - (k_ma_{mm} + 1).
+	\end{vmatrix}
+\end{equation}
+
+Se colocarmos $\rho - 1 = \lambda$, o polinômio característico \ref{polidif} é igual
+ao polinômio \ref{poli}. Ou seja, $q(\rho) = q(\lambda + 1) = p(\lambda)$. Além disso,
+se $\lambda_i$ é raíz de $p$, então $\lambda_i + 1$ é raíz de $q$ (e vice-versa).
+
+\begin{lema}
+	Se \ref{sistdif} é estável, então \ref{sistm} é estável.
+\end{lema}
+
+\begin{proof}
+	Seja $\lambda_i + 1$ as raízes de $q(\lambda + 1)$. Para que haja estabilidade em
+	\ref{sistdif} é preciso que as partes reais das raízes sejam em módulo menor que 1,
+	isto é,
+
+	\begin{equation}
+		\begin{aligned}
+		|Re(\lambda_i + 1)| < 1 \implies -1 < Re(\lambda_i + 1) < 1 \implies \\
+		\implies -1 < Re(\lambda_i) + 1 < 1 \implies -2 < Re(\lambda_i) < 0.
+	\end{aligned}
+	\end{equation}
+
+		Descobrimos que $\lambda_i$ tem parte real negativa e como $\lambda_i$ é raíz de $p$,
+		\ref{sistm} é estável.
+\end{proof}
+
+\begin{lema}
+	Se \ref{sistm} é estável, então \ref{sistdif} é estável.
+\end{lema}
+
+\begin{proof}
+Como a estabilidade do sistema é independente das unidades de tempo, escolhemos
+unidades convenientes de maneira que $0 < k_ia_{ii} + 1 < 1$. Além disso, como
+os bens são substitutos brutos, $0 < k_ia_{ij} < 1$.
+
+Dessa forma, a matriz \ref{matrizdif} tem todos os componentes positivos. Pelo teorema de Perron-Frobenius,
+sabemos que existe um autovalor de B, $\lambda(B)$, tal que $\lambda(B) > 0$.
+Se $\omega$ é outro autovalor de B, então $|\omega| < \lambda(B)$.
+
+Vamos provar por contrapositivo. Suponhamos que \ref{sistdif} não é estável. Então, existe uma raiz $\mu$ de
+$q(\lambda)$ tal que $|\mu| \geq 1$. Nesse caso, $q(\lambda)$ tem uma raiz real $\lambda(B) > |\mu| > 1$.
+
+Assim, $\lambda(B) - 1 > 0$ é raíz de $p(\lambda)$ e, como ela é positiva,
+o sistema \ref{sistm} não é estável.
+\end{proof}
+
+Com os procedimentos acima, chegamos no seguinte teorema.
+
+\begin{teorema}
+	O sistema \ref{sistm} é estável se, e só se, \ref{sistdif} é estável.
+\end{teorema}
+
+Agora, basta provar que a estabilidade de \ref{sistdif} é equivalente à estabilidade
+perfeita de Hicks.
+
+\begin{lema}
+	Se \ref{sistdif} é perfeitamente estável no sentido de Hicks, então
+	\ref{sistdif} é dinamicamente estável
+\end{lema}
+
+\begin{proof}
+Expandindo o polinômio característico da matriz \ref{matrizdif}, temos
+
+\begin{equation} \label{polidifexpand}
+	\begin{aligned}
+	q(\lambda) = p(\lambda - 1) = (\lambda - 1)^m + (-1)^1 S_1(\lambda - 1)^{m-1} + \ldots + \\
+	+ (-1)^{m-1}S_{m-1}(\lambda - 1) + (-1)^m S_m.
+	\end{aligned}
+\end{equation}
+
+Se \ref{sistdif} tem estabilidade perfeita no sentido de Hicks, os menores de
+ordem $i$ têm o mesmo sinal de $(-1)^i$. Assim, \ref{polidifexpand} tem todos os coeficientes
+positivos. Pela regra dos sinais de Descartes, não há nenhuma raiz real não negativa,
+isto é, $\lambda - 1 < 0 \implies \lambda < 1$. Novamente, pelo teorema
+de Perron-Frobenius, $|\omega| < \lambda(B) < 1$ para toda raiz $\omega$ de
+\ref{polidif}. Como todas raízes estão dentro do círculo unitário, o sistema de equações em diferenças
+é estável.
+\end{proof}
+
+Agora, basta provar a volta.
+
+\begin{lema}
+	 Se \ref{sistdif} é dinamicamente estável, então
+		\ref{sistdif} é perfeitamente estável no sentido de Hicks.
+\end{lema}
+
+\begin{proof}
+	Consideremos uma versão reduzida a $n$ mercados de \ref{sistdif}.
+
+	\begin{equation} \label{sistdifreduz}
+		\begin{matrix}
+				\hat{y_1}(t) =& (k_1a_{11} + 1)\hat{y_1}(t - 1) &+& k_1a_{12}\hat{y_2}(t-1) &+& \ldots &+& k_1a_{1n}\hat{y_n}(t-1) \\
+				\hat{y_2}(t) =& k_2a_{21}\hat{y_1}(t - 1) &+& (k_2a_{22} + 1)\hat{y_2}(t-1) &+& \ldots &+& k_2a_{2n}\hat{y_n}(t-1) \\
+				\vdots \\
+				\hat{y_n}(t) =& k_na_{n1}\hat{y_1}(t - 1) &+& k_na_{n2}\hat{y_2}(t-1) &+& \ldots &+& (k_na_{nn} + 1)\hat{y_n}(t-1)
+		\end{matrix}
+	\end{equation}
+
+	Vamos mostrar que o sistema completo é estável somente se o sistema reduzido é estável.
+
+	Se $y_i \geq \hat{y_i} > 0$ para os valores iniciais, então
+	$y_i(t) \geq \hat{y_i}(t)$ para qualquer $t$. Provamos esta última afirmação por
+	indução. Se $y_i(t-1) \geq \hat{y_i}(t-1)$ para todo $j = 1, \ldots, n$, então
+	$y_i(t)$ é uma soma de termos $\geq 0$, dos quais $m$ termos estão presentes em
+	$\hat{y_i}(t)$. Portanto, $y_i(t) \geq \hat{y_i}(t)$. Assim, se o sistema reduzido
+	é instável, o sistema maior também é.
+
+	Para que o sistema reduzido seja estável, é preciso que $(-1)^n$ tenha o mesmo sinal do
+	determinante de ordem $n$
+
+\begin{equation}
+	\begin{vmatrix}
+		a_{11} & \ldots & a_{1n} \\
+		\vdots \\
+		a_{n1} & \ldots & a_{nn}
+	\end{vmatrix}
+\end{equation}
+
+	como vimos antes. Mas, novamente, essa é a condição de estabilidade perfeita em Hicks.
+
+\end{proof}
+
+Os dois lemas anteriores nos dão o seguinte teorema.
+
+\begin{teorema}
+	Se há substituibilidade bruta dos bens, a estabilidade perfeita no sentido de Hicks
+	é equivalente a estabilidade dinâmica.
+\end{teorema}
+
+Terminada a parte I, iremos olhar para os métodos de Liapunov mais de perto.
+O capítulo seguinte mostrará sobre o que se trata o segundo método de Liapunov
+e em seguida conseguiremos analisar o paper de \citeonline{bushawclower1954}.
+
+% ----------------------------------------------------------
+% PARTE SOBRE CLOWER E BUSHAW
+% ----------------------------------------------------------
+\part{Liapunov, Clower e Bushaw}
+% ------------------------------
+
+% ---
+% Capitulo de Liapunov
+% ---
+\chapter{Os métodos de Liapunov} \label{liapunov}
+% ---
+
+% ---
+\section{Teorema de Liapunov}
+% ---
+
+Seja $\U \subseteq \R^n$ aberto, $X: \U \to \R^n$ um campo de vetores de classe
+$C^\infty$, $x_0 \in \U$
+e $X(x_0) = 0$. Com isso, consideremos o seguinte sistema dinâmico
+
+\begin{equation}
+	x' = X(x),
+\end{equation}
+
+isto é,
+
+\begin{equation}
+	X(x) =
+	\begin{pmatrix}
+		f_1(x) \\
+		\vdots \\
+		f_n(x)
+	\end{pmatrix}
+	\implies
+	\begin{matrix}
+		x'_1(t) = f_1(x_1(t), \ldots, x_n(t)) \\
+		\vdots \\
+		x'_n(t) = f_n(x_1(t), \ldots, x_n(t)). \\
+	\end{matrix}
+\end{equation}
+
+Observe que $x'(t) = x_0$ é um equilíbrio estacionário para o sistema acima.
+
+\begin{definicao}
+	Um fluxo em $\U$ é uma aplicação $\Fi: \R \times \U \to \U$ tal que
+
+	\begin{enumerate}
+		\item $\Fi(0, x) = x$;
+		\item $\Fi(t, \Fi(s, x)) = \Fi(t + s, x)$.
+	\end{enumerate}
+\end{definicao}
+
+A ideia é que a trajetória do sistema $x' = X(x)$ define um fluxo $\Fi(t, x)$.
+Em outras palavras, $\Fi(t, \xbarra) = x(t)$ em que $x(0) = \xbarra$.
+
+\begin{definicao} \label{funcliapunov}
+	Uma função de Liapunov para o campo $X$ em $x_0$ é uma função
+	$V: U_0 \to \R$ de classe $C^1$, definida em uma vizinhança $U_0 \subseteq \U$ de $x_0$, tal que
+ 		\begin{enumerate}
+			\item $V(x_0) = 0$, $V(x) > 0$, para $x \neq x_0$;
+			\item $\nabla V(x) \cdot X \leq 0$ em $U_0$
+		\end{enumerate}
+\end{definicao}
+
+Se a desigualdade é estrita no item 2, dizemos que é uma função de Liapunov estrita.
+
+\begin{teorema}[\textit{Teorema de Liapunov}] \label{teorliapunov}
+	Se existe uma função de Liapunov para o campo $X$ em $x_0$, então $x_0$ é um
+	equilíbrio estável. Ademais, se existe uma função de Liapunov estrita, o equilíbrio
+	será assintoticamente estável.
+\end{teorema}
+
+\begin{proof}
+	Consideremos uma vizinhança aberta tal que o fecho compacto $\overline{U}_0$ de
+	$U_0$ é tal que
+		\begin{equation*}
+			m = \min_{\partial \overline{U}_0} V(x)
+		\end{equation*}
+
+	Antes de continuar a demonstração, apenas clarifico que $\partial \overline{U}_0$
+	refere-se à fronteira de $\overline{U}_0$. Isto é,
+
+	\begin{equation}
+		\partial \overline{U}_0 = \{x \in \R^n \; | \; \exists \{x_n\} \subseteq \overline{U}_0
+			\; \text{com} \; x_n \to x \; \text{e} \; \exists \{y_n\} \subseteq \overline{U}_0^c \; \text{com} \;  y_n \to x\}.
+	\end{equation}
+
+	Na reta, por exemplo, a fronteira do conjunto $A = (0, 1)$ é $\partial A = \{0, 1\}$.
+
+	Prosseguimos com a demonstração. Como $V$ é contínua e $V(x_0) = 0$, então podemos escolher uma vizinhança aberta
+	$U_1 \subseteq U_0$, $x \in U_1$ e $V(x) < m$.
+
+	Se $\Fi(t, x)$ é o fluxo determinado por $x' = X(x)$, então $V(\Fi(t, x)) < m,
+	\; \forall t \geq 0$, pois $V$ é decrescente sobre as trajetórias de $x' = X$.
+
+	Devemos mostrar que $\Fi(t, x) \in \overline{U}_0 \ \forall t \geq 0$.
+	Vamos provar por absurdo. Se existe $t' > 0$
+	tal que $\Fi(t', x) \notin \Ubarrao$, então há um $t''$ tal que $t' > t'' > 0$
+	e $\Fi(t'', x) \in \partial \Ubarrao$ e portanto $V(\Fi(t'', x)) \geq m$,
+	pois $m$ é o mínimo de V em $\partial \Ubarrao$. Mas isto é um absurdo, pois
+	$V(\Fi(t, x)) < m \; \forall t \geq 0$.
+
+	Logo, $\Fi(t, x_0) = x_0$ é uma solução estável. Nos resta provar agora o segundo caso.
+
+	Suponhamos que exista uma trajetória $\Fi(t, x)$ tal que
+
+	\begin{equation*}
+		\lim_{t \to \infty} \Fi(t, x) \neq x_0.
+	\end{equation*}
+
+	Então, existe uma sequência $t_1 < t_2 < \ldots < t_n < \ldots$ tal que
+
+	\begin{equation*}
+		\lim_{n \to \infty} \Fi(t_n, x) \neq x_0 \espaco \text{e} \espaco \lim_{k \to \infty} \Fi(t_{n_k}, x) = y,
+	\end{equation*}
+
+	sendo a igualdade garantida pela compacidade de $\Ubarrao$ e pelo teorema de
+	Bolzano-Weirstrass.
+
+	Ademais, temos que
+
+	\begin{equation*}
+		\lim_{k \to \infty} \Fi(t_{n_k} + 1, x) = \lim_{k \to \infty} \Fi(1, \Fi(t_{n_k}, x)) = \Fi(1, y).
+	\end{equation*}
+
+	Pela continuidade de V,
+
+	\begin{equation*}
+		\begin{matrix}
+			V(\Fi(t_{n_k}, x)) \to V(y) = V(\Fi(0, y)) \\
+			V(\Fi(t_{n_k} + 1, x)) \to V(\Fi(1, y)),
+		\end{matrix}
+	\end{equation*}
+
+	mas isso implica que
+
+	\begin{equation*}
+		V(\Fi(0, y)) = V(\Fi(1, y)),
+	\end{equation*}
+
+	o que é uma contradição, pois por hipótese V é estritamente decrescente sobre
+	as trajetórias. Então
+
+	\begin{equation*}
+		\lim_{t \to \infty} \Fi(t, x) = x_0 \espaco \text{para} \ x \in U_1
+	\end{equation*}
+
+	e $x_0$ é um equilíbrio assintoticamente estável.
+
+\end{proof}
+
+	Procedemos agora para analisar o artigo de \citeonline{bushawclower1954}.
+
+% ---
+% Capitulo de Bushaw e Clower
+% ---
+\chapter{O sistema estoque-fluxo de Bushaw e Clower}
+% ---
+
+\section{Contribuições...?}
+
+O artigo de \citeonline{bushawclower1954} é um pequeno desvio do caminho que
+tracei até agora. Enquanto tudo que expus anteriormente remetia à pesquisa sobre estabilidade
+de um equilíbrio geral, aqui os autores pretendem criar uma teoria geral de determinação
+de preços em um modelo de estoque-fluxo. Citando a introdução de seu artigo,
+
+\begin{citacao}[english]
+	In recent years economists have devoted considerable attention to special
+problems involving stock-flow relationship. Thus far, however, attempts to
+study such relationships within the framework of the general theory of price
+determination have been few in number and highly restricted in scope. The
+object of the present paper is to fill at least part of this gap in the existing literature.
+It is a study in the pure theory of market price determination in a stock-flow economy - an
+economy in which the typical commodity is simultaneously produced, consumed, and
+held for future disposal by economic units. \cite[p. 328]{bushawclower1954}
+\end{citacao}
+
+Logo na introdução já temos uma pista do motivo de \citeonline{negishi1962}
+não ter citado Clower e Bushaw em sua \textit{survey}: o foco do artigo \textit{não}
+era estudar a estabilidade de um equilíbrio geral. Além do mais, o modelo proposto pelos autores
+difere tanto daquele proposto por Hicks e Samuelson quanto daquele proposto por
+Arrow e Hurwicz (como veremos a seguir). Weintraub não percebe que, simplesmente,
+esse artigo não foi relevante para a pesquisa da estabilidade do equilíbrio walrasiano.
+Os autores propõem uma modelagem diferente do que havia à época
+e a comunidade científica não incorporou suas contribuições.
+
+Mas ainda assim, Weintraub se refere especificamente aos métodos de Liapunov
+introduzidos pelos autores, não à contribuição do artigo em geral.
+A investigação detalhada do artigo a seguir mostrará
+que a contribuição deles (para a inserção dos métodos de Liapunov) também não foi tão
+significante assim.
+
+\section{Estoque e fluxo: definições}
+
+Definimos a notação de antemão:
+
+\begin{definicao} Para o restante do capítulo, consideramos que:
+\begin{itemize}
+	\item há $m$ mercados;
+	\item $p_i$ é o preço do i-ésimo bem, $\precos$;
+	\item $d_i(\precos)$ é a \textit{flow demand} (demanda corrente) e $s_i(\precos)$
+	é a \textit{flow supply} (oferta corrente) do bem $i$;
+	\item $D_i(\precos)$ é a demanda pelo estoque do bem $i$;
+	\item $S_i \equiv S_i^0 + \displaystyle\int^t_{t_0}(s_i - d_i)dt$, $S_i$ é a oferta pelo
+	estoque do bem $i$, em que $S_i^0$ é o estoque do bem $i$ no tempo $t_0$.
+	\item $X_i(\precos; t) \equiv D_i(\precos) - S_i^0 + \displaystyle \int^t_{t_0}x_i(\precos)dt$, em que
+	$X_i$ é o excesso de demanda por estoques e $x_i \equiv d_i - s_i$ é o excesso de demanda corrente.
+\end{itemize}
+\end{definicao}
+
+Quando me refiro aos termos oferta/demanda corrente, quero dizer apenas que é a
+oferta/demanda que ocorre em cada período $t$, sem depender das produções passadas.
+
+Supomos mais uma vez que a variação dos preços é uma função
+do excesso de demanda, mas desta vez incluímos além da produção corrente a produção de estoque, isto é,
+
+\begin{equation} \label{funcp}
+	\frac{dp_i}{dt} = f_i(x_i, X_i) \espaco i = 1, \ldots, m
+\end{equation}
+
+Faremos algumas suposições sobre o comportamento de \ref{funcp}:
+
+\begin{subequations}
+
+\begin{equation} \label{comport1}
+		\bigg(\frac{\partial f_i}{\partial x_i}\bigg)^2 + \bigg(\frac{\partial f_i}{\partial X_i}\bigg)^2 > 0 \quad \text{e}
+\end{equation}
+
+\begin{equation} \label{comport2}
+			f_i(0, 0) = 0.
+\end{equation}
+\end{subequations}
+
+Em uma vizinhança dos pontos $\xbarra_i$ e $\overline{X}_i$ e expandindo em Taylor, temos que
+
+\begin{equation}
+	f_i \approx f_i(\xbarra_i, \overline{X}_i) + \frac{\partial f_i}{\partial x_i}(x_i - \xbarra_i)
+	 	  + \frac{\partial f_i}{\partial X_i}(X_i - \overline{X}_i)
+			= \alpha_i(x_i - \xbarra_i) + \beta_i(X_i - \overline{X}_i)
+\end{equation}
+
+e por \ref{comport1}, não pode ocorrer que $\alpha_i = 0$ e $\beta_i = 0$ simultaneamente.
+Se colocarmos $\xbarra_i = \overline{X}_i = 0$, temos por \ref{comport2}
+
+\begin{equation} \label{qi}
+	f_i = \alpha_ix_i + \beta_iX_i \espaco i = 1, \ldots, m
+\end{equation}
+
+\begin{definicao}
+	Se $\alpha_i = 0$, chamaremos o bem $i$ de estoque-orientado. Se $\beta_i = 0$,
+	o bem $i$ será chamado de fluxo-orientado.
+\end{definicao}
+
+\section{O equilíbrio}
+
+Suponhamos que na vizinhança de $p^0 = (p^0_1, \ldots, p^0_m)$ as funções
+$x_i$ e $D_i$ admitam a seguinte expansão em séries de potências:
+
+\begin{subequations}
+
+	\begin{equation}
+		x_i = x^0_i + \somamj a_{ij}(p_j - p^0_j) + [(p_1 - p^0_1), \ldots, (p_m - p^0_m)]
+	\end{equation}
+
+	\begin{equation}
+		D_i = D^0_i + \somamj b_{ij}(p_j - p^0_j) + [(p_1 - p^0_1), \ldots, (p_m - p^0_m)]
+	\end{equation}
+
+\end{subequations}
+
+O símbolo $[(p_1 - p^0_1), \ldots, (p_m - p^0_m)]$ indica alguma série de potências
+nas variáveis $(p_1 - p^0_1), \ldots, (p_m - p^0_m)$, iniciando com termos de segundo grau,
+$a_{ij} = \frac{\partial x_i}{\partial p_j}$ e $b_{ij} = \frac{\partial D_i}{\partial p_j}$.
+
+Se definirmos $\displaystyle \frac{dp_i}{dt} = q_i$ e utilizarmos as equações acima,
+chegamos em
+
+\begin{equation} \label{dqi}
+\begin{aligned}
+	& \frac{dq_i}{dt} = \beta_i x^0_i + \somamj \beta_i a_{ij} (p_j - p^0_j) +
+	\somamj (\alpha_i a_{ij} + \beta_i b_{ij})q_j + \\
+	&+ [(p_1 - p^0_1), \ldots, (p_m - p^0_m);q_1, \ldots, q_m] \espaco i=1, \ldots, m
+\end{aligned}
+\end{equation}
+
+As equações \ref{qi} e \ref{dqi} formam o sistema que temos que lidar.
+
+\begin{definicao}
+	Para que $p^0 = (p^0_1, \ldots, p^0_m)$ seja um ponto de equilíbrio no tempo
+	$t_0$, é preciso que
+
+		\[\frac{dp_i}{dt} = 0, \qquad \frac{dq_i}{dt} = 0, \espaco i = 1, \ldots, m\]
+
+\end{definicao}
+
+Portanto, se $p^0$ é um ponto de equilíbrio em $t_0$, temos que
+
+\begin{equation} \label{equicondi}
+	\begin{cases}
+		\begin{aligned}
+			&\alpha_i x^0_i & + & \beta_i X^0_i = 0, \\
+			&               &   & \beta_i x^0_i = 0,
+		\end{aligned}
+	\end{cases}
+\end{equation}
+
+que por sua vez, é equivalente à condição
+
+\begin{equation}
+	x_i^0 = X^i_0 = 0 \; \text{se} \; \beta_i \neq 0, \qquad x_i^0 = 0 \; \text{se} \; \beta_i = 0.
+\end{equation}
+
+Em palavras, as condições necessárias e suficientes para o equilíbrio implicam que
+
+\begin{itemize}
+	\item o excesso de demanda por estoques e o excesso de demanda corrente desaparecem no equilíbrio se o bem não é fluxo-orientado;
+	\item o excesso de demanda corrente desaparece no equilíbrio se o bem é fluxo-orientado.
+\end{itemize}
+
+
+Vamos redefinir algumas variáveis para enxugar a notação.
+
+\begin{definicao} Supondo ainda que $p^0 = (p^0_1, \ldots, p^0_m)$ é um vetor de preços de equilíbrio,
+	a nova notação é dada por:
+ \begin{itemize}
+ 	\item $P_i = p_i - p_i^0$;
+	\item $Q_i = \frac{dp_i}{dt} = \frac{dP_i}{dt}$;
+	\item $P = (P_1, \ldots, P_m)$;
+	\item $Q = (Q_1, \ldots, Q_m)$;
+	\item $\A = (\mathit{A_{ij}})$;
+	\item $\mathit{A_{ij}} = \beta_i a_{ij}$;
+	\item $\B = (\mathit{B_{ij}})$;
+	\item $\mathit{B_{ij}} = \alpha_i a_{ij} + \beta_i  b_{ij}$.
+ \end{itemize}
+\end{definicao}
+
+Para o restante da seção, supomos que $\beta_i \neq 0 \; \forall i = 1, \ldots, m$.
+
+Assim, podemos escrever em notação vetorial o sistema composto por \ref{qi} e \ref{dqi},
+
+\begin{equation} \label{eqnlin}
+	\begin{cases}
+		\frac{dP}{dt} = Q \\
+		\frac{dQ}{dt} = \textbf{A}P + \textbf{B}Q + [P_1, \ldots, P_m; Q_1, \ldots Q_n].
+	\end{cases}
+\end{equation}
+
+A estabilidade do sistema \ref{eqnlin} é implicada pela estabilidade de sua versão
+linearizada,
+
+\begin{equation} \label{eqlin}
+	\begin{cases}
+		\frac{dP}{dt} = Q \\
+		\frac{dQ}{dt} = \textbf{A}P + \textbf{B}Q.
+	\end{cases}
+\end{equation}
+
+A matriz de coeficientes é, portanto,
+
+\begin{equation} \label{mateqlin}
+	\begin{pmatrix}
+		\boldsymbol{0} & \boldsymbol{I} \\
+		\A & \B
+	\end{pmatrix}.
+\end{equation}
+
+O polinômio característico de \ref{mateqlin} é
+
+\begin{equation} \label{policar}
+	p(\lambda) = |\I \lambda^2 - \B \lambda - \A|.
+\end{equation}
+
+Vamos ver alguns teoremas sobre a estabilidade desse sistema.
+
+\begin{teorema} \label{teor}
+	Se as matrizes $\A$ e $\B$ são negativas definidas, toda raiz real de \ref{policar}
+	é negativa.
+\end{teorema}
+
+\begin{proof}
+	Seja $\lambda$ uma raiz real de \ref{policar} e seja $M$ um vetor característico real correspondente.
+	Isso implica que
+
+	\begin{equation} \label{poliM}
+		(M)\lambda^2 - (\B M)\lambda - (\A M) = 0.
+	\end{equation}
+
+	Tomando o produto escalar de \ref{poliM} com $M$, temos
+
+	\begin{equation} \label{poliMum}
+		(M^T M)\lambda^2 - (M^T \B M)\lambda - (M^T \A M) = 0.
+	\end{equation}
+
+	Pela nossa hipótese, todos coeficientes da equação \ref{poliMum} são positivos.
+	Portanto, pela regra dos sinais de Descartes, a raiz real $\lambda$ só pode ser negativa.
+
+\end{proof}
+
+\begin{teorema} \label{teor2}
+	Se as matrizes $\A$ e $\B$ são negativas definidas e a matriz $\A$ é simétrica,
+	toda raiz de \ref{policar} tem parte real negativa.
+\end{teorema}
+
+\begin{proof}
+
+	Seja $\lambda = \sigma + \tau i$ uma raiz de \ref{policar} e seja $M$ um vetor
+	característico correspondente. Tomando o produto escalar de \ref{poliM} com
+	$\Mbarra$, o conjugado de $M$, temos
+
+	\begin{equation} \label{poliMdois}
+		(\Mbarra^T M)\lambda^2 - (\Mbarra^T \B M)\lambda - (\Mbarra^T \A M) = 0
+	\end{equation}
+
+	Tirando o conjugado dos dois lados, temos
+
+	\begin{equation} \label{poliMtres}
+		(M^T \Mbarra) \overline{\lambda}^2 - (M^T \B \Mbarra) \overline{\lambda} - (M^T \A \Mbarra) = 0
+	\end{equation}
+
+	Dividindo \ref{poliMdois} por $\lambda$, \ref{poliMtres} por $\overline{\lambda}$ e somando ambos, temos
+
+	\begin{equation}
+		(\Mbarra^T M)\sigma - \frac{1}{2}(\Mbarra^T \B M + M^T \B \Mbarra) - (\Mbarra^T \A M) \frac{\sigma}{\sigma^2 + \tau^2} = 0.
+	\end{equation}
+
+	Colocando $M = U + iV$, chegamos em
+
+	\begin{equation}
+		(\Mbarra^T M)\sigma - (U^T \B U + V^T \B V) - (U^T \A U + V^T \A V) \frac{\sigma}{\sigma^2 + \tau^2} = 0.
+	\end{equation}
+
+	Como as matrizes $\A$ e $\B$ são negativas definidas, temos novamente, pela regra
+	dos sinais de Descartes, que todos coeficientes são positivos e as raízes $\sigma$
+	são positivas.
+
+\end{proof}
+
+\begin{teorema}
+	Se a matriz $\B$ é negativa definida e se as matrizes $\A$ e $\B$ são simétricas,
+	então toda raiz complexa de \ref{policar} tem parte real negativa.
+\end{teorema}
+
+\begin{proof}
+	Novamente, seja a raiz $\lambda = \sigma + \tau i$ e $M = U + iV$. Por hipótese, tratamos de
+	raízes complexas, ou seja, $\tau \neq 0$. Como $\A$ e $\B$ são simétricas, \ref{poliMdois}
+	só possui coeficientes reais. Portanto, $\overline{\lambda}$ é a outra raiz e temos
+
+	\begin{equation}
+		\lambda + \overline{\lambda} = 2\sigma = \frac{\Mbarra^T \B M}{\Mbarra^T M} = \frac{U^T \B U + V^T \B V}{\Mbarra^T M},
+	\end{equation}
+
+	sendo o último pedaço negativo. Portanto, $\sigma < 0$ e o sistema é estável.
+\end{proof}
+
+Note que o teorema \ref{teor} não nos garante que a mera propriedade de matrizes
+negativas definidas implica estabilidade. É preciso também que todas as raízes sejam
+reais. O exemplo abaixo ilustra isso.
+
+Seja $n = 2$. As matrizes abaixo
+
+\begin{equation}
+	\A =
+	\begin{pmatrix}
+		-4 & 6 \\
+		1 & -4
+	\end{pmatrix}, \quad
+	\B =
+	\begin{pmatrix}
+		-4 & 1 \\
+		6  & -4
+	\end{pmatrix}
+\end{equation}
+
+são ambas negativas definidas. Montando o polinômio \ref{policar} para
+essas matrizes, temos
+
+\begin{equation}
+	\lambda^4 + 8\lambda^3 + 18\lambda^2 - 5\lambda + 10 = 0.
+\end{equation}
+
+As raízes são $\lambda_{1,2} \approx 0.21290 + 0.65444i$ e $\lambda_{3, 4} \approx -4.2129 \pm 1.8346i$.
+Logo, há um par de raízes com coeficiente real positivo e o sistema não é estável.
+
+Sem lançar mão das condições de simetria, os autores não conseguem formular uma condição geral o suficiente
+para garantir a estabilidade.
+
+De qualquer maneira, toda a discussão de Clower e Bushaw se baseia no cômputo explícito das
+soluções do sistema, ou como eles mesmo chamam, do "primeiro método de Liapunov".
+A nossa discussão toda centra-se no segundo método de Liapunov, isto é, da utilização
+de uma função auxiliar para identificar as condições de estabilidade. Ao fazer
+esse breve comentário sobre Liapunov, os autores provam o teorema \ref{teor2}
+utilizando o segundo método. Vamos vê-lo.
+
+\begin{teorema}
+	Supondo as mesmas condições de \ref{teor2} ($\A$ simétrica e negativa definida,
+	$\B$ negativa definida) e que existe uma função contínua $V(P, Q)$ que
+	\begin{enumerate}
+		\item zera quando $P = Q = 0$,
+		\item é positiva definida e
+		\item tem uma derivada total $\frac{dV}{dt} \leq 0$,
+	\end{enumerate}
+
+	então o estado de equilíbrio $P = Q = 0$ é estável
+\end{teorema}
+
+Antes da demonstração, note que os autores simplesmente definem uma função de Liapunov, como
+na definição \ref{funcliapunov} e enunciam o teorema \ref{teorliapunov}.
+
+\begin{proof}
+	Definimos a função
+
+	\begin{equation}
+		V(P, Q) = Q^T Q - P^T \A P,
+	\end{equation}
+
+	que cumpre 1 e 2. Sua derivada (computada utilizando \ref{eqnlin}) é
+	$\displaystyle \frac{dV}{dt} = 2Q^T \B Q$, que cumpre 3 por $\B$ ser negativa definida.
+\end{proof}
+
+O resto da discussão dos autores trata de seu modelo de estoque-fluxo.
+Isso não nos interessa, pois já vimos em qual situação os autores apresentaram
+os métodos de Liapunov. Há mais um corolário provado utilizando os mesmos métodos,
+na página 339, nota de rodapé 10.
+
+Como comentei na introdução, Clower e Bushaw apenas se valem marginalmente
+da função de Liapunov para seu trabalho. Falta apenas ver como Arrow e Hurwicz
+utilizam os métodos no seu artigo.
+
+% ----------------------------------------------------------
+% PARTE ARROW E HURWICZ
+% ----------------------------------------------------------
+\part{Arrow e Hurwicz}
+% ----------------------------------------------------------
+
+% ---
+% Capítulo de Lakatos
+% ---
+%\chapter{O núcleo duro do programa neowalrasiano} \label{lakatos}
+% ---
+
+%\section{Um outro programa de pesquisa}
+
+% ---
+% Capítulo de Arrow e Hurwicz
+% ---
+\chapter{O artigo de Arrow e Hurwicz} \label{arrowhurwicz}
+% ---
+
+% ---
+\section{Definindo conceitos}
+% ---
+
+O objetivo dos autores em seu artigo é preencher algumas lacunas deixadas
+pela comunidade científica até então. Isto é, apesar de os economistas à época
+estudarem a relação entre a estabilidade dinâmica de Samuelson e a estabilidade
+perfeita de Hicks, pouco se sabia sobre \textit{quais} condições garantiam estabilidade.
+Assim, era precisa descobrir se a estabilidade era compatível com preferências
+convexas, racionais, etc. Essa era o projeto de pesquisa dos novos economistas matemáticos,
+como Arrow, Debreu, Hahn, Gale, entre outros.
+
+O trabalho de \citeonline{arrowhurwickz1958} mostrará algumas economias que eram
+compatíveis com estabilidade, preenchendo a lacuna acima.
+
+O trabalho começa definindo a notação que será usada.
+
+O sistema dinâmico a ser resolvido pode ser representado como $m$ equações
+diferenciais ordinárias:
+
+\begin{subequations}
+
+	\begin{equation} \label{sistemanormal}
+	 	\frac{dp_j}{dt} = f_j(p_1, \ldots, p_m) \espaco (j = 1, \ldots, m)
+	\end{equation}
+
+	\begin{equation} \label{sistemavetor}
+		\frac{dp}{dt} = f(p) \espaco p = (p_1, \ldots, p_m)
+	\end{equation}
+
+\end{subequations}
+
+A equação \ref{sistemavetor} é a forma vetorial de \ref{sistemanormal}.
+
+\begin{definicao}
+$\solucao$ é uma (trajetória da) solução de \ref{sistemanormal}
+(ou \ref{sistemavetor}) se, e só se
+
+\begin{subequations}
+
+	\begin{equation} \label{trajetoria1}
+		\frac{d\solucao}{dt} = f[\solucao]
+	\end{equation}
+
+	\begin{equation} \label{trajetoria2}
+		\Psi(0, \pbola) = \pbola
+	\end{equation}
+
+\end{subequations}
+
+\end{definicao}
+
+Note que a condição \ref{trajetoria2} diz apenas que $\pbola$ é o valor
+inicial da solução.
+
+\begin{definicao}
+	Um ponto $\pbarra \in \R^m$ é um ponto de equilíbrio de \ref{sistemavetor}
+	se, e só se
+
+	\begin{equation} \label{ptoequilibrio}
+		f(\pbarra) = 0
+	\end{equation}
+
+\end{definicao}
+
+\begin{definicao}
+	Um ponto de equilíbrio $\pbarra$ é chamado de localmente estável se existe
+	uma vizinhança $N(\pbarra)$ tal que para qualquer $\pbola \in N(\pbarra)$,
+	toda solução $\solucao$ convergirá para $\pbarra$, isto é
+
+	\begin{equation} \label{estabpequeno}
+		\lim_{t \to \infty} \solucao = \pbarra
+	\end{equation}
+
+\end{definicao}
+
+Esta é a definição de Samuelson de estabilidade do primeiro tipo no "pequeno".
+
+\begin{definicao}
+	Um ponto de equilíbrio $\pbarra$ é chamado de globalmente estável se
+	toda solução $\solucao$ (com qualquer $\pbola$ inicial) converge para
+	$\pbarra$.
+\end{definicao}
+
+Esta é a definição de Samuelson de estabilidade do primeiro tipo no "grande".
+
+Existe a possibilidade de haver múltiplos equilíbrios. Para acomodar o conceito
+de estabilidade nesse caso, os autores se referem à seguinte definição.
+
+\begin{definicao}
+	Seja $E$ o conjunto de todos pontos de equilíbrio. O sistema \ref{sistemavetor}
+	é dito estável se, e só se, para todo $\pbola$ inicial, $\solucao$ converge para algum
+	$\pbarra \in E$.
+\end{definicao}
+
+Agora os autores dão significado à notação acima.
+
+\begin{definicao}
+	O significado econômico das variáveis acima:
+	\begin{itemize}
+		\item $p_0 = 1$ é o preço do bem "numerário";
+		\item $P_1, \ldots, P_m$ são os preços dos outros bens;
+		\item $p_1, \ldots, p_m$ são os preços dos outros bens em termos do numerário,
+		isto é, $p_1 = P_1/p_0, \ldots, p_m = P_m/p_0$;
+	  \item $p = (p_0, p_1, \ldots, p_m)$ é o vetor de preços normalizado;
+		\item $\frac{dp_j}{dt} = f_j(p_1, \ldots, p_m)$, (j = 1, \ldots, m), é a
+		função de excesso de demanda agregada do bem $j$.
+	\end{itemize}
+\end{definicao}
+
+O último item é o sistema \ref{sistemanormal} montado acima e define o \textit{processo de ajustamento instantâneo}. Como vimos no \autoref{metzler},
+Metzler estuda também o sistema no caso em que as velocidades de ajustamento variam, a saber
+
+\begin{equation} \label{sistemavel}
+	\frac{dp_j}{dt} = k_jf_j(p_1, \ldots, p_m), \quad k_j > 0 \espaco (j = 1, \ldots, m)
+\end{equation}
+
+em que $k_j$ é a velocidade de ajustamento no mercado $j$. Já sabemos que escolhendo
+as unidades de medida convenientes para $k_j$ conseguimos reduzir \ref{sistemavel}
+a \ref{sistemanormal}. Portanto, se há estabilidade em \ref{sistemanormal}, a estabilidade
+em \ref{sistemavel} é determinada por consequência.
+
+Isso torna-se mais importante ainda dado o teorema \ref{metzler1} de Metzler. %% REFERENCIAR RESULTADO DE METZLER
+Portanto, temos o seguinte teorema
+
+\begin{teorema}
+	Se o sistema \ref{sistemanormal} é estável $\implies$ o sistema \ref{sistemavel}
+	é estável $\implies$ há estabilidade perfeita no sentido de Hicks no equilíbrio.
+\end{teorema}
+
+\begin{proof}
+Veja o \autoref{metzler} para a prova.
+\end{proof}
+
+Existem $n$ unidades (firmas, indivíduos) e cada uma delas maximiza
+alguma entidade (lucro, utilidade) que está em função dos preços.
+Em competição perfeita, os preços são exógenos.
+
+O artigo trata apenas dos casos de trocas puras (as menções a economias de produção
+restringem-se aos rodapés). Cada indivíduo $i$ se depara com o seguinte problema
+
+\begin{equation} \label{otimizacao}
+\begin{aligned}
+& \text{max}
+& & u^i(X^i_0, X^i_1, \ldots, X^i_m) \\
+& \text{sujeito a}
+& & \sum^m_{k = 0} p_k\Xik = \sum^m_{k = 0} p_k\Xbolaik, \\
+&&& \Xik \geq 0
+&&&&& (k = 0, 1, \ldots, m)
+\end{aligned}
+\end{equation}
+
+em que $\Xik$ é a quantidade consumida e
+$\Xbolaik$ é a dotação inicial possuída pelo indivíduo $i$ do bem $k$.
+
+A solução do problema \ref{otimizacao} pode ser escrita como
+
+\begin{equation}
+	\Xchapeuik =  \Xbolaik + f^i_k(p_1, \ldots, p_m) \espaco (k = 0, 1, \ldots, m)
+\end{equation}
+
+em que $f^i_k$ é a função excesso de demanda do indivíduo $i$ pelo bem $k$.
+A função excesso de demanda \textbf{agregada} do bem $k$ é definida por
+
+\begin{equation}
+	f_k(p_1, \ldots, p_m) = \somani  f^i_k(p_1, \ldots, p_m) \espaco
+	(k = 0, 1, \ldots, m).
+\end{equation}
+
+A existência do equilíbrio competitivo significa que existe um vetor
+
+\begin{equation}
+	\pbarra = (\pbarra_1, \ldots, \pbarra_m)
+\end{equation}
+
+tal que as duas condições abaixo são cumpridas
+
+\begin{subequations}
+\begin{equation}
+	f_j(\pbarra) = 0 \espaco (j = 1, \ldots, m)
+\end{equation}
+
+\begin{equation} \label{equilibrio}
+	\pbarra \geqslant 0.
+\end{equation}
+\end{subequations}
+
+Note que a desigualdade em \ref{equilibrio} é diferente da desigualdade em
+\ref{otimizacao}. Falarei um pouco sobre essa diferença de notações.
+
+Pegue dois vetores $u$ e $v$, com $m$ componentes cada um. A desigualdade
+$u \geq v$ significa que $u_i \geq v_i$ para todo $i = 1, \ldots, m$,
+mas $u_j > v_j$ para algum $j$. Já a desigualdade $u \geqslant v$ significa
+apenas que $u_i \geq v_i$ para todo $i = 1, \ldots, m$. Portanto, $u \geq v$ é uma condição mais forte que $u \geqslant v$.
+
+Os autores concluem a introdução e começam a mostrar os resultados.
+Meu interesse é apresentar apenas a parte I do artigo, em que o segundo método
+de Liapunov é usado.
+
+\section{O caso da ausência de trocas no equilíbrio}
+
+Antes de continuar a apresentação do artigo, é importante fazer um comentário
+sobre a nota de rodapé 21 na página 530. O rodapé é esse: "See Arrow and
+Hurwicz [5]. This is a special case of Liapounoff's 'second method' for
+proving stability". A referência de número 5 é o trabalho de
+\citeonline{arrowhurwicz1951}. Na página 5 desse artigo, os autores definem uma função D,
+que é "proportional to the distance in the $(X, Y)$ space to the saddle-point
+$(\overline{X}, \overline{Y})$". Em outras palavras, é uma aplicação de
+Liapunov.
+
+Ademais, na bibliografia do artigo há o livro de \citeonline{lefschetz1948}. O
+livro discute \textit{extensamente} os métodos de Liapunov. Portanto, é
+suficiente dizer que a comunidade de economia já tinha conhecimento dos métodos, antes da publicação de
+Clower e Bushaw.
+
+Continuemos. Seja $D$ a distância entre um ponto $p$ para algum equilíbrio
+$\pbarra$.
+
+\begin{equation}
+	D^2 = \sum^m_{k=0}(p_k - \pbarra_k)^2 = \somamj(p_j - \pbarra_j)^2.
+\end{equation}
+
+A última igualdade vem do fato que $p_0 = \pbarra_0 = 1$. Mostraremos que, sob
+certas condições, $\frac{dD}{dt} < 0$ e, com isso, $p \to \pbarra$ quando $t \to \infty$. Definimos a distância $V$, tal que
+
+\begin{equation}
+	V = \frac{1}{2}D^2
+\end{equation}
+
+e derivamos em relação ao tempo, obtendo
+
+\begin{equation} \label{derivadaV1}
+	\frac{dV}{dt} =  \somamj(p_j - \pbarra_j)(\frac{dp_j}{dt}) = \somamj(p_j - \pbarra_j)x_j.
+\end{equation}
+
+Aqui, $x_k = \frac{dp_k}{dt} = f_k(p_1, \ldots, p_m)$, com $k = 0, 1, \ldots,
+m$. Novamente, $x_k$ representa o excesso de demanda do bem $k$. Para definir
+o excesso de demanda do indivíduo $i$ pelo bem $k$ usamos $\xik$, de tal forma
+que
+
+\begin{equation}
+	\xik = \Xchapeuik - \Xbolaik, \espaco x_k = \somani\xik.
+\end{equation}
+
+Fazendo as devidas substituições em \ref{derivadaV1}, obtemos
+
+\begin{equation} \label{derivadaV2}
+	\begin{aligned}
+	\frac{dV}{dt} = \somamj p_jx_j - \somamj \pbarra_jx_j = \somamj p_j \somani \xij - \somamj \pbarra_jx_j = \\
+	= \somani(\somamj p_j\xij) - \somamj \pbarra_jx_j
+\end{aligned}
+\end{equation}
+
+Pegue a restrição orçamentária em \ref{otimizacao},
+
+\begin{equation} \label{restricao}
+	\sum^m_{k=0} p_k\xik = 0
+\end{equation}
+
+e a substitua em \ref{derivadaV2} (utilizando o fato de que $\pbarra_0 = p_0 = 1$). Assim, obtemos
+
+\begin{equation}
+	\frac{dV}{dt} = \somani(-p_0x^i_0) - \somamj\pbarra_j(\somani \xij) = - \somani(\sum^m_{k=0}\pbarra_k \xik).
+\end{equation}
+
+\begin{lema}
+	Suponha que cada indivíduo satisfaça o axioma fraco das preferências reveladas \footnote{Confira \citeonline{mwg1995}.} Então,
+	\begin{equation}
+		\xbarraik = 0 \quad \forall i = 1, \ldots, n \  \text{e} \ \forall k = 0, \ldots, m \implies - \somamj(p_j - \pbarra_j)\xij = \sum^m_{k=0}\pbarra_k\xik > 0
+	\end{equation}
+\end{lema}
+
+\begin{proof}
+	Por definição, $\xbarra^i \equiv (\xbarra^i_0, \ldots, \xbarra^i_m)$ maximiza
+	a utilidade de $i$ sujeito a $\Pbarra \cdot \xbarra^i$. No entanto, como
+	$\xbarra^i = 0$ (por hipótese), então $P \cdot \xbarra^i = 0$. Portanto, o
+	antecedente do axioma da preferência revelada se mantém na forma
+	$P \cdot \xbarra^i \leq P \cdot x^i$ pela restrição orçamentária $P \cdot x^i$.
+	Se segue então que $P \cdot x^i > P \cdot \xbarra^i$, a não ser que $\xbarra^i = x^i$.
+	Isso fornece $\Pbarra \cdot x^i > 0$ a não ser que $x^i = 0$, pois $\Pbarra \cdot \xbarra^i = 0$.
+	Dividindo ambos os lados de $\Pbarra \cdot x^i > 0$ por $\Pbarra_0$, nós obtemos o lema.
+\end{proof}
+
+Portanto, se segue que $\frac{dV}{dt} < 0$ a não ser que $x^i = 0$, isto é,
+$x^i = \xbarra^i$ para todo $i$.
+
+Portanto, nos falta ver o caso em que $x^i = \xbarra^i$ para todo $i$. Caso isso ocorra,
+temos que
+
+\begin{equation}
+	u^i_k(x^i) = u^i_k(\xbarra^i) \espaco \text{para todo} \; i, k,
+\end{equation}
+
+em que $u^i_k \equiv \frac{\partial u}{\partial \xik}$.
+
+Por sua vez, no máximo individual (isto é, com toda restrição orçamentária gasta)
+
+\begin{equation}
+	p_j = \frac{u^i_j}{u^i_0}.
+\end{equation}
+
+Portanto, temos que $\frac{dV}{dt} < 0$ a não ser que
+
+\begin{equation}
+	p_j = \frac{u^i_j}{u^i_0} \pbarra_j,
+\end{equation}
+
+isto é, quando
+
+\begin{equation}
+	p_j = \pbarra_j \espaco j = 1, \ldots, m
+\end{equation}
+
+de tal forma que o sistema está em equilíbrio. Assim
+
+\begin{equation}
+	\lim_{t \to \infty} \solucao = \pbarra \espaco \forall \; \pbola.
+\end{equation}
+
+Como estabilidade global implica a unicidade do equilíbrio, nós temos o
+
+\begin{teorema}
+	Suponha que toda função excesso de demanda indivídual é contínua e nenhum indivíduo
+	está saturado (isto é, a restrição em \ref{otimizacao} é com igualdade e não desigualdade).
+	Deixe $\xbarra^i = 0$ para todo $i = 1, \ldots, m$. Então, o processo de ajustamento
+	instantâneo é estável em trocas puras. Além disso, possui um único vetor de preços de equilíbrio.
+\end{teorema}
+
+Após isso, Arrow e Hurwicz procuram vários casos em que a condição $\xbarra^i = 0$
+é satisfeita. Isso não interessa ao trabalho, pois a intenção era apenas mostrar
+em que partes eles utilizaram o teorema de Liapunov, em contraste com os usos
+de Clower e Bushaw.
+
+Por fim, no apêndice da parte I os autores continuam usando extensamente os métodos de
+Liapunov. Aqui, ao invés de tratar de processos de ajustamento instantâneo, os autores
+trabalham com processos de ajustamento com defasagem entre mercados. Novamente,
+não interessa ao trabalho, pois o resultado principal já foi mostrado.
+
+% ----------------------------------------------------------
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ----------------------------------------------------------
+\phantompart
+
+% ---
+% Conclusão
+% ---
+\chapter{Conclusão}
+% ---
+
+Para Weintraub e outros historiadores do pensamento econômico, a história é
+apenas uma narrativa criada pelo historiador e há inúmeras versões dela.
+Segundo eles, narrativas que se pretendem mostrar como uma sequência de
+acontecimentos que levam inevitavelmente à Verdade e ao Progresso trariam
+consigo vícios e distorções dos acontecimentos históricos. Essa é a posição
+da Sociologia do Conhecimento Científico. Weintraub tenta mostrar
+que a \textit{survey} de \citeonline{negishi1962} é uma dessas narrativas.
+O autor seleciona o artigo de \citeonline{bushawclower1954} e o retrata como se
+fosse um artigo fundamental para a discussão sobre estabilidade em equilíbrio
+walrasiano da época. Ele segue a crítica argumentando que o artigo, apesar de
+introduzir os métodos de Liapunov na teoria econômica, foi ignorado por
+\citeauthoronline{negishi1962}.
+
+O que mostrei em meu trabalho foi a irresponsabilidade de Weintraub em retratar
+dessa maneira o artigo, pois a) os métodos de Liapunov já eram conhecidos na comunidade
+acadêmica de economia antes do artigo de Clower e Bushaw, b) Clower e Bushaw não faziam
+parte do mesmo programa de pesquisa dos economistas matemáticos (Arrow, Debreu, Gale, etc.) e
+não contribuíram para a expansão do conhecimento sobre estabilidade em equilíbrio walrasiano e c)
+Clower e Bushaw utilizam apenas marginalmente os métodos de Liapunov.
+
+Diante disso, a tese de Weintraub fica enfraquecida e pouco esclarece a discussão
+da época. Apesar disso, o resto do livro de Weintraub traz alguns \textit{insights} importantes.
+Sua tese sobre os métodos de Liapunov não foi um deles.
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{bibliografia}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+% \begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+% \partapendices
+
+% ----------------------------------------------------------
+% \chapter{Quisque libero justo}
+% ----------------------------------------------------------
+
+%\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+%\begin{anexosenv}
+
+% Imprime uma página indicando o início dos anexos
+%\partanexos
+
+%\end{anexosenv}
+
+\end{document}

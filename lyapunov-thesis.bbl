@@ -1,0 +1,103 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
+
+\bibitem[Arrow e Hurwicz 1951]{arrowhurwicz1951}
+\abntrefinfo{Arrow e Hurwicz}{ARROW; HURWICZ}{1951}
+{ARROW, K.~J.; HURWICZ, L. \emph{A Gradient Method for Approximating Saddle
+  Points and Constrained Maxima}. 1951.
+Dispon{\'\i}vel em: \url{https://www.rand.org/pubs/papers/P223.html}.}
+
+\bibitem[Arrow e Hurwicz 1958]{arrowhurwickz1958}
+\abntrefinfo{Arrow e Hurwicz}{ARROW; HURWICZ}{1958}
+{ARROW, K.~J.; HURWICZ, L. On the stability of the competitive equilibrium, i.
+\emph{Econometrica: Journal of the Econometric Society}, JSTOR, p. 522--552,
+  1958.}
+
+\bibitem[Backhouse, Boianovsky et al. 2013]{backhouseboianovsky2013}
+\abntrefinfo{Backhouse, Boianovsky et al.}{BACKHOUSE; BOIANOVSKY et al.}{2013}
+{BACKHOUSE, R.~E.; BOIANOVSKY, M. et al. Transforming modern macroeconomics.
+\emph{Cambridge Books}, Cambridge University Press, 2013.}
+
+\bibitem[Clower e Bushaw 1954]{bushawclower1954}
+\abntrefinfo{Clower e Bushaw}{CLOWER; BUSHAW}{1954}
+{CLOWER, R.~W.; BUSHAW, D.~W. Price determination in a stock-flow economy.
+\emph{Econometrica: Journal of the Econometric Society}, JSTOR, p. 328--343,
+  1954.}
+
+\bibitem[Hicks 1939]{hicks1939}
+\abntrefinfo{Hicks}{HICKS}{1939}
+{HICKS, J. \emph{Value and Capital: An Inquiry into some Fundamental Principles
+  of Economic Theory}. 1. ed. Oxford University Press, 1939. Dispon{\'\i}vel
+  em: \url{https://EconPapers.repec.org/RePEc:oxp:obooks:9780198282693}.}
+
+\bibitem[Lange 1944]{lange1944}
+\abntrefinfo{Lange}{LANGE}{1944}
+{LANGE, O. \emph{Price Flexibility and Employment}. Greenwood Press, 1944.
+  (Cowles Commission for Research in Economics Monographs).
+ISBN 9780313204807. Dispon{\'\i}vel em:
+  \url{https://books.google.com.br/books?id=dw5pPwAACAAJ}.}
+
+\bibitem[Lefschetz 1948]{lefschetz1948}
+\abntrefinfo{Lefschetz}{LEFSCHETZ}{1948}
+{LEFSCHETZ, S. \emph{Lectures on Differential Equations}. Princeton University
+  Press, 1948.  (Annals of mathematics studies).
+ISBN 9780691083957. Dispon{\'\i}vel em:
+  \url{https://books.google.com.br/books?id=1rbkRZZQ5IAC}.}
+
+\bibitem[Mas-Colell, Whinston e Green 1995]{mwg1995}
+\abntrefinfo{Mas-Colell, Whinston e Green}{MAS-COLELL; WHINSTON; GREEN}{1995}
+{MAS-COLELL, A.; WHINSTON, M.~D.; GREEN, J.~R. \emph{Microeconomic Theory}. New
+  York: Oxford University Press, 1995.}
+
+\bibitem[Metzler 1945]{metzler1945}
+\abntrefinfo{Metzler}{METZLER}{1945}
+{METZLER, L.~A. Stability of multiple markets: the hicks conditions.
+\emph{Econometrica: Journal of the Econometric Society}, JSTOR, p. 277--292,
+  1945.}
+
+\bibitem[Negishi 1962]{negishi1962}
+\abntrefinfo{Negishi}{NEGISHI}{1962}
+{NEGISHI, T. The stability of a competitive economy: a survey article.
+\emph{Econometrica: Journal of the Econometric Society}, JSTOR, p. 635--669,
+  1962.}
+
+\bibitem[Samuelson 1941]{samuelson1941}
+\abntrefinfo{Samuelson}{SAMUELSON}{1941}
+{SAMUELSON, P.~A. The stability of equilibrium: Comparative statics and
+  dynamics.
+\emph{Econometrica}, [Wiley, Econometric Society], v.~9, n.~2, p. 97--120,
+  1941.
+ISSN 00129682, 14680262.
+Dispon{\'\i}vel em: \url{http://www.jstor.org/stable/1906872}.}
+
+\bibitem[Samuelson 1942]{samuelson1942}
+\abntrefinfo{Samuelson}{SAMUELSON}{1942}
+{SAMUELSON, P.~A. The stability of equilibrium: Linear and nonlinear systems.
+\emph{Econometrica}, [Wiley, Econometric Society], v.~10, n.~1, p. 1--25, 1942.
+ISSN 00129682, 14680262.
+Dispon{\'\i}vel em: \url{http://www.jstor.org/stable/1907018}.}
+
+\bibitem[Samuelson 1944]{samuelson1944}
+\abntrefinfo{Samuelson}{SAMUELSON}{1944}
+{SAMUELSON, P.~A. The relation between hicksian stability and true dynamic
+  stability.
+\emph{Econometrica}, [Wiley, Econometric Society], v.~12, n.~3/4, p. 256--257,
+  1944.
+ISSN 00129682, 14680262.
+Dispon{\'\i}vel em: \url{http://www.jstor.org/stable/1905436}.}
+
+\bibitem[Weintraub 1991]{weintraub1991}
+\abntrefinfo{Weintraub}{WEINTRAUB}{1991}
+{WEINTRAUB, E.~R. \emph{Stabilizing dynamics: Constructing economic knowledge}.
+  [S.l.]: Cambridge University Press, 1991.}
+
+\bibitem[Yasui 1950]{yasui1950}
+\abntrefinfo{Yasui}{YASUI}{1950}
+{YASUI, T. A general theory of stability.
+\emph{Economic Studies Quarterly}, v.~1, p. 13--32, 1950.}
+
+\end{thebibliography}

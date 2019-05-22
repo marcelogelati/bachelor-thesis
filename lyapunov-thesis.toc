@@ -1,0 +1,45 @@
+\changetocdepth {4}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Introdu\IeC {\c c}\IeC {\~a}o}{15}{chapter*.9}
+\babel@toc {english}{}
+\babel@toc {brazil}{}
+\babel@toc {english}{}
+\babel@toc {brazil}{}
+\babel@toc {english}{}
+\babel@toc {brazil}{}
+\contentsline {part}{\partnumberline {I}\MakeTextUppercase {Hicks, Samuelson e Metzler}}{17}{part.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase {As estabilidades perfeita e din\IeC {\^a}mica de Hicks e Samuelson}}{19}{chapter.1}
+\contentsline {section}{\numberline {1.1}Estabilidade no sentido de Hicks}{19}{section.1.1}
+\contentsline {section}{\numberline {1.2}As contribui\IeC {\c c}\IeC {\~o}es de Samuelson}{22}{section.1.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase {Metzler e a integra\IeC {\c c}\IeC {\~a}o das duas estabilidades}}{25}{chapter.2}
+\contentsline {section}{\numberline {2.1}Velocidades de ajustamento}{25}{section.2.1}
+\contentsline {section}{\numberline {2.2}Primeiro teorema de Metzler}{26}{section.2.2}
+\contentsline {section}{\numberline {2.3}Segundo teorema de Metzler}{29}{section.2.3}
+\contentsline {part}{\partnumberline {II}\MakeTextUppercase {Liapunov, Clower e Bushaw}}{35}{part.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase {Os m\IeC {\'e}todos de Liapunov}}{37}{chapter.3}
+\contentsline {section}{\numberline {3.1}Teorema de Liapunov}{37}{section.3.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase {O sistema estoque-fluxo de Bushaw e Clower}}{41}{chapter.4}
+\contentsline {section}{\numberline {4.1}Contribui\IeC {\c c}\IeC {\~o}es...?}{41}{section.4.1}
+\babel@toc {english}{}
+\babel@toc {brazil}{}
+\contentsline {section}{\numberline {4.2}Estoque e fluxo: defini\IeC {\c c}\IeC {\~o}es}{41}{section.4.2}
+\contentsline {section}{\numberline {4.3}O equil\IeC {\'\i }brio}{43}{section.4.3}
+\contentsline {part}{\partnumberline {III}\MakeTextUppercase {Arrow e Hurwicz}}{49}{part.3}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase {O artigo de Arrow e Hurwicz}}{51}{chapter.5}
+\contentsline {section}{\numberline {5.1}Definindo conceitos}{51}{section.5.1}
+\contentsline {section}{\numberline {5.2}O caso da aus\IeC {\^e}ncia de trocas no equil\IeC {\'\i }brio}{54}{section.5.2}
+\vspace {\cftbeforechapterskip }
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase {Conclus\IeC {\~a}o}}{57}{chapter.6}
+\vspace {\cftbeforechapterskip }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{\uppercase {Refer\^encias}}{59}{section*.16}
